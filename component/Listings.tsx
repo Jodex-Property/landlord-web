@@ -47,7 +47,6 @@ interface PropertyCards {
           <MarketplaceCards />
         </TabsContent>
       </Tabs>
-
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/85 bg-opacity-50 flex items-center justify-center z-50">
