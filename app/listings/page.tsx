@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import SideNavBar from "@/component/common/SideNavBar";
 import TopNavBar from "@/component/common/TopNavBar";
 import useRequest from "@/component/hook/use-req";
@@ -9,20 +7,13 @@ import { ProfileData, Property } from "@/component/types";
 import React, { useEffect, useState } from "react";
 
 const ListingPage = () => {
-  const userToken = localStorage.getItem("token");
   const [listings, setListings] = useState<Property[] | null>(null);
     const [rentedProperties, setRentedProperties] = useState<Property[] | null>(null);
-  const { makeRequest: getListing } = useRequest("/properties", "GET", {
-    Authorization: `Bearer ${userToken}`,
-  });
-    const { makeRequest: getProperties } = useRequest("/rent/rented", "GET", {
-    Authorization: `Bearer ${userToken}`,
-  });
+  const { makeRequest: getListing } = useRequest("/properties", "GET");
+    const { makeRequest: getProperties } = useRequest("/rent/rented", "GET");
     const [profile, setProfile] = useState<ProfileData | null>(null);
   
-    const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
-      Authorization: `Bearer ${userToken}`,
-    });
+    const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET");
   
     useEffect(() => {
       const fetchProfile = async () => {
@@ -54,8 +45,6 @@ const ListingPage = () => {
     };
     fetchProperties();
   }, []);
-
-  console.log('rentedProperties', rentedProperties)
 
 
 
