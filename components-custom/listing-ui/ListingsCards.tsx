@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 "use client";
 import { MapPin, PencilIcon, Trash2Icon, CircleXIcon } from "lucide-react";
 import Image from "next/image";
@@ -48,7 +48,7 @@ const ListingCard = ({ listings }: ListingCardProps) => {
       }
     };
     fetchListing();
-  }, []);
+  }, [getSingleListing]);
 
   console.log("fjbnjfjbs", singleListing);
   return (

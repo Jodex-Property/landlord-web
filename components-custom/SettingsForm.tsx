@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -113,7 +114,7 @@ const SettingsForm = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [getProfile, form]);
 
   return (
     <Card className="max-w-7xl mt-10 shadow-none border-none">

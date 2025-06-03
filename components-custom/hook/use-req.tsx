@@ -1,8 +1,9 @@
 "use client";
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { showToast } from "../toast";
+
 
 const baseURL =
   process.env.NEXT_PUBLIC_BACKEND_URL ||
@@ -16,7 +17,15 @@ export default function useRequest(
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<any>();
   const [statusCode, setStatusCode] = useState(0);
-  const token = localStorage.getItem("token");
+  const [token, setToken] = useState<string | null>(null);
+  // const token = localStorage.getItem("token");
+
+    useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("token");
+      setToken(storedToken);
+    }
+  }, []);
 
   async function makeRequest(options?: {
     data?: any;

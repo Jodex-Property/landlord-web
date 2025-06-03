@@ -1,4 +1,6 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import SideNavBar from "@/components-custom/common/SideNavBar";
 import TopNavBar from "@/components-custom/common/TopNavBar";
 import useRequest from "@/components-custom/hook/use-req";

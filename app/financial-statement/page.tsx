@@ -1,4 +1,6 @@
 "use client"
+export const dynamic = "force-dynamic";
+
 import SideNavBar from "@/components-custom/common/SideNavBar";
 import TopNavBar from "@/components-custom/common/TopNavBar";
 import ExpensesTable from "@/components-custom/finanicals-ui/ExpensesTable";
@@ -8,12 +10,19 @@ import useRequest from "@/components-custom/hook/use-req";
 import { ProfileData } from "@/components-custom/types";
 
 const FinancialStatementPage = () => {
-  const userToken = localStorage.getItem("token");
+  const [token, setToken] = useState<string | null>(null);
   const [profile, setProfile] = useState<ProfileData | null>(null);
 
   const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
-    Authorization: `Bearer ${userToken}`,
+    Authorization: `Bearer ${token}`,
   });
+
+  useEffect(() => {
+          if (typeof window !== "undefined") {
+            const localToken = localStorage.getItem("token");
+            setToken(localToken);
+          }
+        }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {

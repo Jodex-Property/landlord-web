@@ -1,7 +1,10 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useState } from "react";
+
 const baseURL =
   process.env.NEXT_PUBLIC_BACKEND_URL ||
   "http://backend-app.jodexservices.com/api/v1";
@@ -14,7 +17,6 @@ export default function useApi(
   const [loading, setLoading] = useState<boolean>(false);
   const [response, setResponse] = useState<any>(null);
   const [statusCode, setStatusCode] = useState<number>(0);
-  const token = localStorage.getItem("token");
 
   async function makeRequest(
     data: any = null,
@@ -43,10 +45,12 @@ export default function useApi(
     }
 
     try {
+      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
       const res = await fetch(urlWithParams, {
         method,
         headers: {
-          Authorization: `Bearer ${token}`,
+          ...(token && { Authorization: `Bearer ${token}` }),
           ...headers,
           ...(contentType !== "multipart/form-data" && { "Content-Type": contentType }),
         },
@@ -62,7 +66,7 @@ export default function useApi(
       return [json, res.status];
     } catch (error: any) {
       setLoading(false);
-       console.error("Request failed:", error);
+      console.error("Request failed:", error);
       return [null, 0];
     }
   }
