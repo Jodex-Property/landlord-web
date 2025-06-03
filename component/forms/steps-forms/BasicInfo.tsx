@@ -62,7 +62,7 @@ const BasicInfo = ({
 
       <FormField
         control={form.control}
-        name="propertyUnits"
+        name="units"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Number of Units</FormLabel>
@@ -76,7 +76,7 @@ const BasicInfo = ({
 
       <FormField
         control={form.control}
-        name="propertyAddress"
+        name="address"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Address</FormLabel>
@@ -92,7 +92,7 @@ const BasicInfo = ({
       />
       <FormField
         control={form.control}
-        name="propertyCity"
+        name="city"
         render={({ field }) => (
           <FormItem>
             <FormLabel>City</FormLabel>
@@ -109,7 +109,7 @@ const BasicInfo = ({
 
       <FormField
         control={form.control}
-        name="propertyState"
+        name="state"
         render={({ field }) => (
           <FormItem>
             <FormLabel>State</FormLabel>
@@ -126,7 +126,7 @@ const BasicInfo = ({
 
       <FormField
         control={form.control}
-        name="propertyFurnished"
+        name="furnished"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Is your property furnished?</FormLabel>
@@ -148,7 +148,7 @@ const BasicInfo = ({
 
       <FormField
         control={form.control}
-        name="propertyCondition"
+        name="condition"
         render={({ field }) => (
           <FormItem>
             <FormLabel>What is your property condition?</FormLabel>
@@ -170,7 +170,7 @@ const BasicInfo = ({
 
       <FormField
         control={form.control}
-        name="propertyDescription"
+        name="description"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Property Description (Optional)</FormLabel>
@@ -188,7 +188,7 @@ const BasicInfo = ({
 
       <FormField 
         control={form.control}
-        name="propertyAvailability"
+        name="availability"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Property Availability</FormLabel>
@@ -210,7 +210,7 @@ const BasicInfo = ({
 
       <FormField 
         control={form.control}
-        name="propertyLeaseDuration"
+        name="duration"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Lease Duration</FormLabel>
@@ -232,7 +232,7 @@ const BasicInfo = ({
 
       <FormField 
         control={form.control}
-        name="propertyUtilitiesIncluded"
+        name="utility"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Are utilities included?</FormLabel>

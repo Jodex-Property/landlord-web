@@ -1,5 +1,4 @@
 import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
 import React from "react";
 
 const ManageShortletPage = () => {
@@ -9,7 +8,7 @@ const ManageShortletPage = () => {
         <SideNavBar />
       </nav>
       <div className="right w-full flex gap-2 flex-col">
-        <TopNavBar />
+     
         <h1>Coming Soon</h1>
       </div>
     </div>

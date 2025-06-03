@@ -48,7 +48,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
     <div className="grid grid-cols-1 gap-6 mt-5 md:grid-cols-2">
       <FormField
         control={form.control}
-        name="propertyRoomCount"
+        name="rooms"
         render={({ field }) => (
           <FormItem>
             <FormLabel>How many bedrooms?</FormLabel>
@@ -84,7 +84,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyBathroomCount"
+        name="bathrooms"
         render={({ field }) => (
           <FormItem>
             <FormLabel>How many bathrooms?</FormLabel>
@@ -112,7 +112,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyKitchenCount"
+        name="kitchen"
         render={({ field }) => (
           <FormItem>
             <FormLabel>How many kitchens?</FormLabel>
@@ -136,7 +136,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyRent"
+        name="rent"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Rent</FormLabel>
@@ -150,7 +150,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyAgencyFee"
+        name="agency"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Agency Fee</FormLabel>
@@ -164,7 +164,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyLegalFee"
+        name="legal"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Legal Fee</FormLabel>
@@ -178,7 +178,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyCautionFee"
+        name="caution"
         render={({ field }) => (
           <FormItem>
             <FormLabel>Caution Fee</FormLabel>
@@ -192,7 +192,7 @@ const PropertyDetails = ({ form }: { form: UseFormReturn<AddPropertyFormValues> 
 
       <FormField
         control={form.control}
-        name="propertyAmenities"
+        name="amenities"
         render={({ field }) => (
           <FormItem className="flex flex-col">
             <FormLabel>Amenities</FormLabel>

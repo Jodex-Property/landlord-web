@@ -6,8 +6,13 @@ import RentedProperties from './listing-ui/RentedProperties';
 import MarketplaceCards from './listing-ui/MarketplaceCards';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import AddPropertyForm from './forms/AddPropertyForm';
+import { Property } from './types';
 
-const Listings = () => {
+interface PropertyCards {
+   listings: Property[]; 
+}
+
+  const Listings = ({ listings }: PropertyCards) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -24,7 +29,7 @@ const Listings = () => {
         <div className='flex items-center justify-between mb-8'>
           <TabsList className='grid w-72 grid-cols-2 bg-white'>
             <TabsTrigger value='myListings' className='cursor-pointer font-bold py-3 text-blue-950'>My Listings</TabsTrigger>
-            <TabsTrigger value='marketPlace' className='cursor-pointer font-bold py-3 text-blue-950'>Marketplace</TabsTrigger>
+            {/* <TabsTrigger value='marketPlace' className='cursor-pointer font-bold py-3 text-blue-950'>Marketplace</TabsTrigger> */}
           </TabsList>
           <button
             className="bg-blue-950 px-10 py-3 rounded-md text-white font-medium text-[13px] cursor-pointer hover:bg-blue-900 transition duration-200 ease-in-out flex items-center gap-2"
@@ -35,14 +40,13 @@ const Listings = () => {
         </div>
 
         <TabsContent value='myListings'>
-          <ListingsCards />
+        {listings && <ListingsCards  listings={listings}/> }  
           <RentedProperties />
         </TabsContent>
         <TabsContent value='marketPlace'>
           <MarketplaceCards />
         </TabsContent>
       </Tabs>
-
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/85 bg-opacity-50 flex items-center justify-center z-50">

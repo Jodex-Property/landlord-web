@@ -1,10 +1,11 @@
 'use client';
 
+import { signOut } from '@/lib/utils';
 import {
-  Archive,
-  FileText,
-  FolderClosed,
-  Hammer,
+  // Archive,
+  // FileText,
+  // FolderClosed,
+  // Hammer,
   House,
   LogOut,
   NotepadText,
@@ -14,23 +15,34 @@ import {
 } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-
-const navItems = [
-  { href: '/dashboard', icon: <House className="h-5 w-5" />, label: 'Home' },
-  { href: '/listings', icon: <NotepadText className="h-5 w-5" />, label: 'Listing' },
-  { href: '/manage-shortlet', icon: <Archive className="h-5 w-5" />, label: 'Manage Shortlet' },
-  { href: '/find-artisans', icon: <Hammer className="h-5 w-5" />, label: 'Find Artisans' },
-  { href: '/declutter-items', icon: <FolderClosed className="h-5 w-5" />, label: 'Declutter Items' },
-  { href: '/financial-statement', icon: <FileText className="h-5 w-5" />, label: 'Financial Statement' },
-  { href: '/settings', icon: <Settings className="h-5 w-5" />, label: 'Settings' },
-  { href: '/#', icon: <LogOut className="h-5 w-5" />, label: 'Logout' },
-];
 
 const SideNavBar = () => {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  
+  const handleSignOut = () => {
+    signOut();
+    router.push("/");
+  };
+
+  const navItems = [
+    { href: '/dashboard', icon: <House className="h-5 w-5" />, label: 'Home' },
+    { href: '/listings', icon: <NotepadText className="h-5 w-5" />, label: 'Listing' },
+    // { href: '/manage-shortlet', icon: <Archive className="h-5 w-5" />, label: 'Manage Shortlet' },
+    // { href: '/find-artisans', icon: <Hammer className="h-5 w-5" />, label: 'Find Artisans' },
+    // { href: '/declutter-items', icon: <FolderClosed className="h-5 w-5" />, label: 'Declutter Items' },
+    // { href: '/financial-statement', icon: <FileText className="h-5 w-5" />, label: 'Financial Statement' },
+    { href: '/settings', icon: <Settings className="h-5 w-5" />, label: 'Settings' },
+    { 
+      href: '#', 
+      icon: <LogOut className="h-5 w-5" />, 
+      label: 'Logout',
+      onClick: handleSignOut 
+    },
+  ];
 
   return (
     <>
@@ -50,24 +62,40 @@ const SideNavBar = () => {
           md:relative md:translate-x-0 md:w-64 md:block
         `}
       >
-        <div className="flex items-center justify-center mt-6 md:mt-5">
+        <div className="flex px-6 mt-6 md:mt-5">
           <Image src="/assets/img/jodex-logo.png" alt="jodex logo" width={100} height={100} />
         </div>
 
         <ul className="px-6 space-y-4 mt-6">
           {navItems.map((item, index) => (
             <li key={index} className="flex items-center gap-2">
-              <Link
-                href={item.href}
-                className={`flex items-center gap-2 w-full text-[15px] px-4 py-2.5 font-medium rounded-lg transition-colors ${
-                  pathname === item.href
-                    ? 'bg-blue-950 text-white'
-                    : 'text-slate-800 hover:bg-blue-950 hover:text-white'
-                }`}
-                onClick={() => setIsOpen(false)} // close drawer on mobile nav click
-              >
-                {item.icon} {item.label}
-              </Link>
+              {item.onClick ? (
+                <button
+                  onClick={() => {
+                    item.onClick?.();
+                    setIsOpen(false);
+                  }}
+                  className={`flex items-center gap-2 w-full text-[15px] px-4 py-2.5 font-medium rounded-lg transition-colors ${
+                    pathname === item.href
+                      ? 'bg-blue-950 text-white'
+                      : 'text-slate-800 hover:bg-blue-950 hover:text-white'
+                  }`}
+                >
+                  {item.icon} {item.label}
+                </button>
+              ) : (
+                <Link
+                  href={item.href}
+                  className={`flex items-center gap-2 w-full text-[15px] px-4 py-2.5 font-medium rounded-lg transition-colors ${
+                    pathname === item.href
+                      ? 'bg-blue-950 text-white'
+                      : 'text-slate-800 hover:bg-blue-950 hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.icon} {item.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>

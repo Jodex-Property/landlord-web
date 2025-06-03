@@ -1,18 +1,36 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { MapPin, PencilIcon, Trash2Icon, CircleXIcon } from "lucide-react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditPropertyForm from "../forms/EditPropertyForm";
+import { Property } from "../types";
+import PlaceHolder from "../../public/assets/img/house-placeholder.jpg";
+import useRequest from "../hook/use-req";
 
-const listings = Array(8).fill({
-  title: "Real Estate",
-  price: "₦19,000,000",
-  location: "Lokongoma, Abuja",
-  image: "/assets/img/jodex-image-1.jpg",
-});
+interface ListingCardProps {
+  listings: Property;
+}
 
-const ListingCard = ({ title, price, location, image }: typeof listings[number]) => {
+const ListingCard = ({ listings }: ListingCardProps) => {
+  const userToken = localStorage.getItem("token");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { address, rent, city, pictures, id, state, propertyType, user } =
+    listings;
+  const title = `${propertyType} - ${user?.businessName ?? "No Name"}`;
+  const price = `₦${rent?.toLocaleString() ?? "0"}`;
+  const location = `${address}, ${city}, ${state}`;
+  const displayImage =
+    pictures && pictures.length > 1 ? pictures[0] : PlaceHolder;
+
+  const [singleListing, setSingleListing] = useState<Property | null>(null);
+  const { makeRequest: getSingleListing } = useRequest(
+    `/properties/${id}`,
+    "GET",
+    {
+      Authorization: `Bearer ${userToken}`,
+    }
+  );
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -22,11 +40,29 @@ const ListingCard = ({ title, price, location, image }: typeof listings[number])
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+    const fetchListing = async () => {
+      const [response] = await getSingleListing();
+      if (response) {
+        setSingleListing(response);
+      }
+    };
+    fetchListing();
+  }, []);
+
+  console.log("fjbnjfjbs", singleListing);
   return (
     <div className="bg-white rounded-md flex flex-col text-gray-900 shadow-lg">
-      <div className="p-2">
-        <Image src={image} alt={title} width={500} height={500} />
+      <div className="flex overflow-x-auto gap-2">
+        <Image
+          src={displayImage}
+          alt={`pictures`}
+          width={500}
+          height={500}
+          className="rounded-md object-cover h-48 w-full"
+        />
       </div>
+
       <div className="p-3">
         <div className="flex items-center justify-between mb-2">
           <div>
@@ -38,8 +74,11 @@ const ListingCard = ({ title, price, location, image }: typeof listings[number])
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <PencilIcon className="w-3 h-3 cursor-pointer" onClick={handleOpenModal} />
-            <Trash2Icon className="w-3 h-3 cursor-pointer" />
+            <PencilIcon
+              className="w-4 h-4 cursor-pointer"
+              onClick={handleOpenModal}
+            />
+            <Trash2Icon className="w-4 h-4 cursor-pointer" />
           </div>
         </div>
       </div>
@@ -48,18 +87,24 @@ const ListingCard = ({ title, price, location, image }: typeof listings[number])
       {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-md shadow-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className='flex justify-between items-center mb-4'>
-              <h2 className="text-lg font-bold mb-4 text-center">Edit Listed Property</h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-lg font-bold mb-4 text-center">
+                Edit Listed Property
+              </h2>
               <button
-                className=" px-4 py-2 rounded-4xl cursor-pointer"
+                className="px-4 py-2 rounded-4xl cursor-pointer"
                 onClick={handleCloseModal}
               >
-              <CircleXIcon width="24px" height="24px" className='text-blue-950' />
+                <CircleXIcon
+                  width="24px"
+                  height="24px"
+                  className="text-blue-950"
+                />
               </button>
-              
             </div>
-            <EditPropertyForm />
-          
+            {singleListing && (
+              <EditPropertyForm singleListing={singleListing} />
+            )}
           </div>
         </div>
       )}
@@ -67,11 +112,14 @@ const ListingCard = ({ title, price, location, image }: typeof listings[number])
   );
 };
 
-const ListingsCards = () => {
+interface ListingsCardsProps {
+  listings: Property[];
+}
+const ListingsCards = ({ listings }: ListingsCardsProps) => {
   return (
-    <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-[#F2F5F8] shadow-sm rounded-md">
-      {listings.map((listing, index) => (
-        <ListingCard key={index} {...listing} />
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-[#F2F5F8] shadow-sm rounded-md">
+      {listings.map((listing) => (
+        <ListingCard key={listing.id} listings={listing} />
       ))}
     </div>
   );

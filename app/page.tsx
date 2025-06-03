@@ -21,7 +21,7 @@ const LoginPage = () => {
 
           <LoginForm />
 
-          <p className="text-sm text-gray-500 text-center mt-4">or</p>
+          {/* <p className="text-sm text-gray-500 text-center mt-4">or</p>
           <div className="flex justify-center items-center w-90 mt-4">
             <a
               href="/sign-in"
@@ -29,7 +29,7 @@ const LoginPage = () => {
             >
               Continue with Google
             </a>
-          </div>
+          </div> */}
 
           <div className="flex justify-center items-center mt-8">
             <p className="text-sm text-gray-500">

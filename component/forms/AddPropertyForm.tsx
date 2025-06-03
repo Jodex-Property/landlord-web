@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-
 import { useState } from "react";
 import { addPropertySchema } from "@/lib/add-property-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,9 @@ import BasicInfo from "./steps-forms/BasicInfo";
 import PropertyDetails from "./steps-forms/PropertyDetails";
 import PropertyImages from "./steps-forms/PropertyImages";
 import ReviewAndSubmit from "./steps-forms/ReviewAndSubmit";
+import { showToast } from "../toast";
+import useApi from "../hook/request";
+import { useRouter } from "next/navigation";
 
 type AddPropertyFormValues = z.infer<typeof addPropertySchema>;
 
@@ -23,30 +26,34 @@ const steps = [
 
 const AddPropertyForm = () => {
   const [currentStep, setCurrentStep] = useState(0);
-
+  const userToken = localStorage.getItem("token");
+  const { makeRequest } = useApi("/properties", "POST", {
+    Authorization: `Bearer ${userToken}`,
+  });
+  const router = useRouter()
   const form = useForm<AddPropertyFormValues>({
     resolver: zodResolver(addPropertySchema),
     defaultValues: {
-      propertyAddress: "",
+      address: "",
       propertyType: "Flat",
-      propertyUnits: "",
-      propertyRent: "",
-      propertyAgencyFee: "",
-      propertyLegalFee: "",
-      propertyCautionFee: "",
-      propertyDescription: "",
-      propertyImages: [],
-      propertyCity: "",
-      propertyState: "",
-      propertyRoomCount: "",
-      propertyBathroomCount: "",
-      propertyKitchenCount: "",
-      propertyAmenities: [],
-      propertyAvailability: "Available",
-      propertyLeaseDuration: "Short Term",
-      propertyUtilitiesIncluded: "Yes",
-      propertyFurnished: "No",
-      propertyCondition: "New Building",
+      units: "",
+      rent: "",
+      agency: "",
+      legal: "",
+      caution: "",
+      description: "",
+      pictures: [],
+      city: "",
+      state: "",
+      rooms: "",
+      bathrooms: "",
+      kitchen: "",
+      amenities: [],
+      availability: "Available",
+      duration: "Short Term",
+      utility: "Yes",
+      furnished: "No",
+      condition: "New Building",
     },
   });
 
@@ -54,32 +61,28 @@ const AddPropertyForm = () => {
     let fieldsToValidate: (keyof AddPropertyFormValues)[] = [];
 
     if (currentStep === 0) {
-      fieldsToValidate = [
-        "propertyAddress",
-        "propertyType",
-        "propertyUnits",
-      ];
+      fieldsToValidate = ["address", "propertyType", "units"];
     } else if (currentStep === 1) {
       fieldsToValidate = [
-        "propertyRent",
-        "propertyAgencyFee",
-        "propertyLegalFee",
-        "propertyCautionFee",
-        "propertyDescription",
-        "propertyCity",
-        "propertyState",
-        "propertyRoomCount",
-        "propertyBathroomCount",
-        "propertyKitchenCount",
-        "propertyAmenities",
-        "propertyAvailability",
-        "propertyLeaseDuration",
-        "propertyUtilitiesIncluded",
-        "propertyFurnished",
-        "propertyCondition",
+        "rent",
+        "agency",
+        "legal",
+        "caution",
+        "description",
+        "city",
+        "state",
+        "rooms",
+        "bathrooms",
+        "kitchen",
+        "amenities",
+        "availability",
+        "duration",
+        "utility",
+        "furnished",
+        "condition",
       ];
     } else if (currentStep === 2) {
-      fieldsToValidate = ["propertyImages"];
+      fieldsToValidate = ["pictures"];
     }
 
     const valid = await form.trigger(fieldsToValidate);
@@ -92,8 +95,48 @@ const AddPropertyForm = () => {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const onSubmit = (values: AddPropertyFormValues) => {
-    console.log("Form submitted:", values);
+  const onSubmit = async (data: AddPropertyFormValues) => {
+    const formData = new FormData();
+    formData.append("address", data.address);
+    formData.append("propertyType", data.propertyType);
+    formData.append("units", data.units);
+    formData.append("rent", data.rent ?? "");
+    formData.append("agency", data.agency);
+    formData.append("legal", data.legal);
+    formData.append("caution", data.caution ?? "");
+    formData.append("description", data.description);
+    formData.append("city", data.city ?? "");
+    formData.append("state", data.state ?? "");
+    formData.append("rooms", data.rooms ?? "");
+    formData.append("bathrooms", data.bathrooms ?? "");
+    formData.append("kitchen", data.kitchen ?? "");
+    formData.append("availability", data.availability ?? "");
+    formData.append("duration", data.duration ?? "");
+    formData.append("utility", data.utility ?? "");
+    formData.append("furnished", data.furnished ?? "");
+    formData.append("condition", data.condition ?? "");
+
+    // ✅ Send amenities as a single key
+    formData.append("amenities", JSON.stringify(data.amenities ?? []));
+
+    // ✅ Send all pictures under the same "pictures" key
+    (data.pictures ?? []).forEach((file: File) => {
+      formData.append("pictures[]", file); // <-- note the [] here
+    });
+
+    const [res, status] = await makeRequest(formData);
+
+    if (status === 201) {
+      showToast("Property added successfully!", true, {
+        position: "top-right",
+      });
+      form.reset();
+      router.push('listings')
+    } else {
+      const message =
+        (res as any)?.message || "Submission failed. Please try again.";
+      showToast(message, false, { position: "top-right" });
+    }
   };
 
   return (
@@ -122,18 +165,29 @@ const AddPropertyForm = () => {
           {currentStep === 0 && <BasicInfo form={form} />}
           {currentStep === 1 && <PropertyDetails form={form} />}
           {currentStep === 2 && <PropertyImages form={form} />}
-          {currentStep === 3 && <ReviewAndSubmit form={form} setCurrentStep={setCurrentStep} />}
+          {currentStep === 3 && (
+            <ReviewAndSubmit form={form} setCurrentStep={setCurrentStep} />
+          )}
         </div>
 
         {/* Navigation Buttons */}
         <div className="flex justify-between p-10">
           {currentStep > 0 && (
-            <Button type="button" onClick={onBack} variant="outline" className="w-1/3 py-5">
+            <Button
+              type="button"
+              onClick={onBack}
+              variant="outline"
+              className="w-1/3 py-5"
+            >
               Back
             </Button>
           )}
           {currentStep < steps.length - 1 ? (
-            <Button type="button" onClick={onNext} className="bg-blue-950 text-white w-1/3 py-5">
+            <Button
+              type="button"
+              onClick={onNext}
+              className="bg-blue-950 text-white w-1/3 py-5"
+            >
               Next
             </Button>
           ) : (

@@ -1,19 +1,27 @@
 "use client";
-
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import { BellDot, User2, Menu } from "lucide-react";
-
-const TopNavBar = () => {
+import { signOut } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { ProfileData } from "../types";
+interface ProfileProps{
+profile: ProfileData | null;
+}
+const TopNavBar: React.FC<ProfileProps> = ({ profile }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const router = useRouter();
+  const handleSignOut = () => {
+    signOut();
+    router.push("/");
+  };
 
   return (
     <div className="flex items-center justify-between h-16 px-4 md:px-8 border-b border-gray-300 relative">
       {/* Logo / Welcome */}
       <h1 className="text-sm sm:text-base font-light">
-        Welcome,{" "}
-        <span className="font-bold text-blue-950">Bliss Homes</span>
+        Welcome, <span className="font-bold text-blue-950">{profile?.businessName || 'N/A'}</span>
       </h1>
 
       {/* Desktop Menu */}
@@ -27,8 +35,8 @@ const TopNavBar = () => {
           >
             <User2 className="h-6 w-6 text-gray-500" />
             <div className="flex flex-col text-sm">
-              <span className="text-blue-950 font-medium">Bisola</span>
-              <span className="text-gray-500 text-xs">Landlord</span>
+              <span className="text-blue-950 font-medium">{profile?.name || 'N/A'}</span>
+              <span className="text-gray-500 text-xs">{profile?.category}</span>
             </div>
           </div>
 
@@ -37,10 +45,7 @@ const TopNavBar = () => {
               <a href="#" className="block px-4 py-2 hover:bg-gray-100">
                 Settings
               </a>
-              <a href="#" className="block px-4 py-2 hover:bg-gray-100">
-                Logout
-              </a>
-             
+              <button onClick={handleSignOut} className="block px-4 py-2 hover:bg-gray-100">Logout</button>
             </div>
           )}
         </div>
@@ -48,15 +53,14 @@ const TopNavBar = () => {
 
       {/* Mobile Menu Button */}
       <button
-        className="md:hidden text-blue-950 flex items-center gap-5" 
+        className="md:hidden text-blue-950 flex items-center gap-5"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         <div className="flex flex-col text-sm">
-              <span className="text-blue-950 font-medium">Bisola</span>
-              <span className="text-gray-500 text-xs">Landlord</span>
+          <span className="text-blue-950 font-medium">{profile?.name || 'N/A'}</span>
+          <span className="text-gray-500 text-xs">{profile?.category || 'N/A'}</span>
         </div>
         <Menu className="h-6 w-6" />
-
       </button>
 
       {/* Mobile Dropdown */}
@@ -67,10 +71,7 @@ const TopNavBar = () => {
             <a href="#" className="text-sm hover:text-blue-950">
               Settings
             </a>
-            <a href="#" className="text-sm hover:text-blue-950">
-              Logout
-            </a>
-
+            <button onClick={handleSignOut} className="block px-4 py-2 hover:bg-gray-100">Logout</button>
           </div>
         </div>
       )}

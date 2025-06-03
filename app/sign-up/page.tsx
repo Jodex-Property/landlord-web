@@ -1,3 +1,4 @@
+"use client";
 import SwiperSlides from "@/component/common/SwiperSlides";
 import SignupForm from "@/component/SignupForm";
 import Image from "next/image";
@@ -44,6 +45,7 @@ const SignupPage = () => {
           </div>
         </div>
       </div>
+    
     </div>
   );
 };

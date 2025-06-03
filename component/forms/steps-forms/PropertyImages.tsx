@@ -9,7 +9,7 @@ const PropertyImages = ({ form }: { form: any }) => {
   return (
     <FormField
       control={form.control}
-      name="propertyImages"
+      name="pictures"
       render={({ field }) => (
         <FormItem>
           <FormLabel>Property Images</FormLabel>

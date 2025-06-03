@@ -27,34 +27,34 @@ export default function ReviewAndSubmit({
             <strong>Type:</strong> {values.propertyType}
           </div>
           <div>
-            <strong>Units:</strong> {values.propertyUnits}
+            <strong>Units:</strong> {values.units}
           </div>
           <div>
-            <strong>Address:</strong> {values.propertyAddress}
+            <strong>Address:</strong> {values.address}
           </div>
           <div>
-            <strong>City:</strong> {values.propertyCity}
+            <strong>City:</strong> {values.city}
           </div>
           <div>
-            <strong>State:</strong> {values.propertyState}
+            <strong>State:</strong> {values.state}
           </div>
           <div>
-            <strong>Description:</strong> {values.propertyDescription}
+            <strong>Description:</strong> {values.description}
           </div>
           <div>
-            <strong>Property Condition:</strong> {values.propertyCondition}
+            <strong>Property Condition:</strong> {values.condition}
           </div>
           <div>
-            <strong>Lease Duration:</strong> {values.propertyLeaseDuration}
+            <strong>Lease Duration:</strong> {values.duration}
           </div>
           <div>
-            <strong>Utilities Included:</strong> {values.propertyUtilitiesIncluded}
+            <strong>Utilities Included:</strong> {values.utility}
           </div>
           <div>
-            <strong>Furnished:</strong> {values.propertyFurnished}
+            <strong>Furnished:</strong> {values.furnished}
           </div>
           <div>
-            <strong>Availability:</strong> {values.propertyAvailability}
+            <strong>Availability:</strong> {values.availability}
           </div>
         </CardContent>
       </Card>
@@ -69,28 +69,28 @@ export default function ReviewAndSubmit({
         </CardHeader>
         <CardContent className="space-y-2">
           <div>
-            <strong>Rent:</strong> ₦{values.propertyRent?.toLocaleString()}
+            <strong>Rent:</strong> ₦{values.rent?.toLocaleString()}
           </div>
           <div>
-            <strong>Agency Fee:</strong> ₦{values.propertyAgencyFee?.toLocaleString()}
+            <strong>Agency Fee:</strong> ₦{values.agency?.toLocaleString()}
           </div>
           <div>
-            <strong>Legal Fee:</strong> ₦{values.propertyLegalFee?.toLocaleString()}
+            <strong>Legal Fee:</strong> ₦{values.legal?.toLocaleString()}
           </div>
           <div>
-            <strong>Caution Fee:</strong> ₦{values.propertyCautionFee?.toLocaleString()}
+            <strong>Caution Fee:</strong> ₦{values.caution?.toLocaleString()}
           </div>
           <div>
-            <strong>Rooms:</strong> {values.propertyRoomCount}
+            <strong>Rooms:</strong> {values.rooms}
           </div>
           <div>
-            <strong>Bathrooms:</strong> {values.propertyBathroomCount}
+            <strong>Bathrooms:</strong> {values.bathrooms}
           </div>
           <div>
-            <strong>Kitchens:</strong> {values.propertyKitchenCount}
+            <strong>Kitchens:</strong> {values.kitchen}
           </div>
           <div>
-            <strong>Amenities:</strong> {values.propertyAmenities?.join(", ")}
+            <strong>Amenities:</strong> {values.amenities?.join(", ")}
           </div>
         </CardContent>
       </Card>
@@ -104,8 +104,8 @@ export default function ReviewAndSubmit({
           </Button>
         </CardHeader>
         <CardContent className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {values.propertyImages?.length > 0 ? (
-            values.propertyImages.map((file: any, index: number) => (
+          {values.pictures?.length > 0 ? (
+            values.pictures.map((file: any, index: number) => (
               <Image
                 key={index}
                 src={typeof file === "string" ? file : URL.createObjectURL(file)}
