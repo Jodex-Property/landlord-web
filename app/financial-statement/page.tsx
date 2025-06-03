@@ -1,11 +1,11 @@
 "use client"
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import ExpensesTable from "@/component/finanicals-ui/ExpensesTable";
-import ImageCard from "@/component/common/ImageCard";
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import ExpensesTable from "@/components-custom/finanicals-ui/ExpensesTable";
+import ImageCard from "@/components-custom/common/ImageCard";
 import { useEffect, useState } from "react";
-import useRequest from "@/component/hook/use-req";
-import { ProfileData } from "@/component/types";
+import useRequest from "@/components-custom/hook/use-req";
+import { ProfileData } from "@/components-custom/types";
 
 const FinancialStatementPage = () => {
   const userToken = localStorage.getItem("token");
@@ -23,7 +23,7 @@ const FinancialStatementPage = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [getProfile]);
   return (
     <div className="min-h-screen flex">
       <nav className="bg-white w-80 flex flex-col gap-10 border-r border-slate-100 shadow-lg">

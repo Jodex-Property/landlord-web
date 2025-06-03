@@ -1,4 +1,4 @@
-import VerificationForm from "@/component/VerificationForm";
+import VerificationForm from "@/components-custom/VerificationForm";
 import Image from "next/image";
 import React from "react";
 

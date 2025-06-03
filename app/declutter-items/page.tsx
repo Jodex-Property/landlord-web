@@ -1,8 +1,8 @@
 "use client"
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import { ProfileData } from "@/component/types";
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import { ProfileData } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 
 const DeclutterItemPage = () => {
@@ -21,7 +21,7 @@ const DeclutterItemPage = () => {
           }
         };
         fetchProfile();
-      }, []);
+      }, [getProfile]);
   
   
   return (

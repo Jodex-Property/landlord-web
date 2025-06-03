@@ -1,5 +1,5 @@
-import SwiperSlides from "@/component/common/SwiperSlides";
-import LoginForm from "@/component/LoginForm";
+import SwiperSlides from "@/components-custom/common/SwiperSlides";
+import LoginForm from "@/components-custom/LoginForm";
 import Image from "next/image";
 
 const LoginPage = () => {

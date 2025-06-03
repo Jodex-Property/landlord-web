@@ -1,5 +1,5 @@
 "use client"
-import ViewRentedProperty from '@/component/listing-ui/ViewRentedProperty'
+import ViewRentedProperty from '@/components-custom/listing-ui/ViewRentedProperty'
 import React from 'react'
 
 const ViewRentedPropertyPage = () => {

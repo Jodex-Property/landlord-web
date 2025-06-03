@@ -1,8 +1,8 @@
 "use client"
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import { ProfileData } from "@/component/types";
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import { ProfileData } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 
 const FindArtisansPage = () => {
@@ -21,7 +21,7 @@ const FindArtisansPage = () => {
         }
       };
       fetchProfile();
-    }, []);
+    }, [getProfile]);
   return (
     <div className="h-screen flex">
       <nav className="bg-white w-80 h-screen flex flex-col gap-10 border-r border-slate-100 shadow-lg">

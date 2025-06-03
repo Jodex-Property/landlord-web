@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import Listings from "@/component/Listings";
-import { ProfileData, Property } from "@/component/types";
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import Listings from "@/components-custom/Listings";
+import { ProfileData, Property } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 
 const ListingPage = () => {
@@ -23,7 +24,7 @@ const ListingPage = () => {
         }
       };
       fetchProfile();
-    }, []);
+    }, [getProfile]);
 
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const ListingPage = () => {
       }
     };
     fetchListing();
-  }, []);
+  }, [getListing]);
 
     useEffect(() => {
     const fetchProperties = async () => {
@@ -44,7 +45,7 @@ const ListingPage = () => {
       }
     };
     fetchProperties();
-  }, []);
+  }, [getProperties]);
 
 
 

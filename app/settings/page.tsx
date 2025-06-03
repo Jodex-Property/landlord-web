@@ -1,10 +1,10 @@
 "use client";
-import ImageCard from "@/component/common/ImageCard";
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import SettingsForm from "@/component/SettingsForm";
-import { ProfileData } from "@/component/types";
+import ImageCard from "@/components-custom/common/ImageCard";
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import SettingsForm from "@/components-custom/SettingsForm";
+import { ProfileData } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 
 const SettingsPage = () => {
@@ -23,7 +23,7 @@ const SettingsPage = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [getProfile]);
 
   return (
     <div className="min-h-screen flex">
