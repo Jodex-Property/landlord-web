@@ -1,5 +1,4 @@
 "use client";
-import ImageCard from "@/component/common/ImageCard";
 import SideNavBar from "@/component/common/SideNavBar";
 import TopNavBar from "@/component/common/TopNavBar";
 import useRequest from "@/component/hook/use-req";
