@@ -6,7 +6,7 @@ import { showToast } from "../toast";
 
 const baseURL =
   process.env.NEXT_PUBLIC_BACKEND_URL ||
-  "http://backend-app.jodexservices.com/api/v1";
+  "https://backend-app.jodexservices.com/api/v1";
 
 export default function useRequest(
   endpoint: string,

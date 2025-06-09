@@ -27,6 +27,7 @@ import { Textarea } from "@/components/ui/textarea";
 import useApi from "./hook/request";
 import { showToast } from "./toast";
 import { ProfileData } from "./types";
+import ImageCard from "./common/ImageCard";
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
@@ -40,6 +41,11 @@ const SettingsForm = () => {
   const { makeRequest: getProfile } = useApi(`/auth/me`, "GET", {
     Authorization: `Bearer ${userToken}`,
   });
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileSchema),
@@ -55,6 +61,7 @@ const SettingsForm = () => {
       address: "",
       option: undefined,
       cac: undefined,
+      profilePicture: undefined,
     },
   });
 
@@ -73,6 +80,9 @@ const SettingsForm = () => {
 
     if (data.cac) {
       formData.append("cac", data.cac);
+    }
+    if (data.profilePicture) {
+      formData.append("profilePicture", data.profilePicture);
     }
 
     const [res, status] = await makeRequest(formData);
@@ -103,11 +113,12 @@ const SettingsForm = () => {
           email: response.email || "",
           contactNumber: response.contactNumber || response.phone || "",
           nin: response.nin || "",
+          profilePicture: response.profilePicture || "",
           address: response.address || "",
           dateOfBirth: response.dateOfBirth || "",
           gender: response.gender || "",
           maritalStatus: response.maritalStatus || "",
-          businessName: response.businessName || ""
+          businessName: response.businessName || "",
         });
       }
     };
@@ -116,13 +127,31 @@ const SettingsForm = () => {
   }, []);
 
   return (
-    <Card className="max-w-7xl mt-10 shadow-none border-none">
+    <Card className=" shadow-none border-none">
+      <ImageCard
+        profilePicture={form.watch("profilePicture") || profile?.profilePicture}
+        name={form.watch("name") || profile?.name}
+        onUploadClick={handleUploadClick}
+      />
       <CardContent>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className="grid grid-cols-1 md:grid-cols-2 gap-8"
           >
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept=".png,.jpg,.jpeg"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  form.setValue("profilePicture", file);
+                }
+              }}
+              className="hidden"
+            />
+
             <FormField
               name="name"
               control={form.control}

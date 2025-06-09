@@ -28,6 +28,7 @@ export interface ProfileData {
   name?:string;
   businessName?:string;
   cac?:string;
+  profilePicture:string
   dateOfBirth?:string;
   category?:string;
   gender?:string;
