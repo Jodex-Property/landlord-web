@@ -56,5 +56,14 @@ cac: z
     message: "CAC document must be a valid file",
   }),
 
+  profilePicture: z
+  .any()
+  .optional()
+  .refine((file) => {
+    if (!file) return true; 
+    return file instanceof File;
+  }, {
+    message: "Profile picture document must be a valid file",
+  }),
 
 });
