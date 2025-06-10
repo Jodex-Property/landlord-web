@@ -13,23 +13,39 @@ interface ListingCardProps {
 }
 
 const ListingCard = ({ listings }: ListingCardProps) => {
-  const userToken = localStorage.getItem("token");
+  // const userToken = localStorage.getItem("token");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { address, rent, city, pictures, id, state, propertyType, user } =
     listings;
   const title = `${propertyType} - ${user?.businessName ?? "No Name"}`;
   const price = `₦${rent?.toLocaleString() ?? "0"}`;
   const location = `${address}, ${city}, ${state}`;
-  const displayImage =
-    pictures && pictures.length > 1 ? pictures[0] : PlaceHolder;
+const getValidImageUrl = (url: string | undefined): string => {
+  if (!url || typeof url !== "string") return PlaceHolder.src;
+
+  // Fix 'undefined' in domain
+  if (url.includes("s3.undefined.amazonaws.com")) {
+    return url.replace(
+      "s3.undefined.amazonaws.com",
+      "s3.eu-north-1.amazonaws.com"
+    );
+  }
+
+  return url;
+};
+
+const displayImage = pictures && pictures.length > 0
+  ? getValidImageUrl(pictures[0])
+  : PlaceHolder.src;
+
 
   const [singleListing, setSingleListing] = useState<Property | null>(null);
   const { makeRequest: getSingleListing } = useRequest(
     `/properties/${id}`,
-    "GET",
-    {
-      Authorization: `Bearer ${userToken}`,
-    }
+    "GET"
+    // {
+    //   Authorization: `Bearer ${userToken}`,
+    // }
   );
 
   const handleOpenModal = () => {
@@ -50,19 +66,19 @@ const ListingCard = ({ listings }: ListingCardProps) => {
     fetchListing();
   }, []);
 
-  console.log("fjbnjfjbs", singleListing);
   return (
     <div className="bg-white rounded-md flex flex-col text-gray-900 shadow-lg">
       <div className="flex overflow-x-auto gap-2">
-        <Image
-          src={displayImage}
-          alt={`pictures`}
-          width={500}
-          height={500}
-          className="rounded-md object-cover h-48 w-full"
-        />
+        <div className="flex overflow-x-auto gap-2">
+          <Image
+            src={displayImage}
+            alt="property"
+            width={500}
+            height={500}
+            className="rounded-md object-cover h-48 w-full"
+          />
+        </div>
       </div>
-
       <div className="p-3">
         <div className="flex items-center justify-between mb-2">
           <div>
@@ -115,7 +131,12 @@ const ListingCard = ({ listings }: ListingCardProps) => {
 interface ListingsCardsProps {
   listings: Property[];
 }
+
 const ListingsCards = ({ listings }: ListingsCardsProps) => {
+  if (!Array.isArray(listings)) {
+    console.error("Expected listings to be an array, got:", listings);
+    return <p>No listings available.</p>;
+  }
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-[#F2F5F8] shadow-sm rounded-md">
       {listings?.map((listing) => (

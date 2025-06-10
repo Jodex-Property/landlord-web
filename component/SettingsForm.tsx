@@ -33,7 +33,7 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 
 const SettingsForm = () => {
   const userToken = localStorage.getItem("token");
-  const { makeRequest } = useApi("/user/update", "PUT", {
+  const { makeRequest } = useApi("/user/profile-picture", "PUT", {
     Authorization: `Bearer ${userToken}`,
   });
 
