@@ -1,19 +1,15 @@
 "use client";
-import ImageCard from "@/component/common/ImageCard";
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import SettingsForm from "@/component/SettingsForm";
-import { ProfileData } from "@/component/types";
+
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import SettingsForm from "@/components-custom/SettingsForm";
+import { ProfileData } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 
-const SettingsPage = () => {
-  const userToken = localStorage.getItem("token");
+export default function SettingsPage() {
   const [profile, setProfile] = useState<ProfileData | null>(null);
-
-  const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
-    Authorization: `Bearer ${userToken}`,
-  });
+  const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET");
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -23,7 +19,7 @@ const SettingsPage = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [getProfile]);
 
   return (
     <div className="min-h-screen flex">
@@ -33,12 +29,9 @@ const SettingsPage = () => {
       <div className="right w-full flex gap-2 flex-col">
         <TopNavBar profile={profile} />
         <div className="bg-white shadow-2xl rounded-lg p-4 mx-5 my-10">
-          <ImageCard />
           <SettingsForm />
         </div>
       </div>
     </div>
   );
-};
-
-export default SettingsPage;
+}
