@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -33,7 +32,11 @@ import ImageCard from "./common/ImageCard";
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
 const SettingsForm = () => {
-  const userToken = localStorage.getItem("token");
+  let userToken: string | null = null;
+
+if (typeof window !== "undefined") {
+  userToken = localStorage.getItem("token");
+}
   const { makeRequest } = useApi("/user/profile-picture", "PUT", {
     Authorization: `Bearer ${userToken}`,
   });
