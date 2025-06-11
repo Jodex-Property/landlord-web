@@ -109,12 +109,10 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
 
   // Handle tenant actions
   // const handleAcceptTenant = (agentId: string) => {
-  //   console.log(`Accepted tenant with agent ID: ${agentId}`);
 
   // };
 
   // const handleDeclineTenant = (agentId: string) => {
-  //   console.log(`Declined tenant with agent ID: ${agentId}`);
     
   // };
 
