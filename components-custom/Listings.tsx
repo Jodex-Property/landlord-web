@@ -16,7 +16,6 @@ interface PropertyCards {
 
 const Listings = ({ listings, rentedProperties }: PropertyCards) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  console.log("rentedProperties", rentedProperties);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
