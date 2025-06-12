@@ -42,9 +42,7 @@ if (typeof window !== "undefined") {
   });
 
   const [profile, setProfile] = useState<ProfileData | null>(null);
-  const { makeRequest: getProfile } = useApi(`/auth/me`, "GET", {
-    Authorization: `Bearer ${userToken}`,
-  });
+  const { makeRequest: getProfile } = useApi(`/auth/me`, "GET");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
@@ -175,7 +173,7 @@ if (typeof window !== "undefined") {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} disabled />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -345,11 +343,11 @@ if (typeof window !== "undefined") {
                 </FormItem>
               )}
             />
-            <div className="col-span-1 md:col-span-2 flex justify-end gap-4">
+            <div className="col-span-1  md:col-span-2 flex justify-end gap-4">
               <Button variant="outline" type="button">
                 Discard
               </Button>
-              <Button type="submit">Save</Button>
+              <Button className="cursor-pointer" type="submit">Save</Button>
             </div>
           </form>
         </Form>

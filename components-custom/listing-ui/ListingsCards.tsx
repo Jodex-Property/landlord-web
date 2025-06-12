@@ -20,6 +20,7 @@ const ListingCard = ({ listings }: ListingCardProps) => {
   const title = `${propertyType} - ${user?.businessName ?? "No Name"}`;
   const price = `₦${rent?.toLocaleString() ?? "0"}`;
   const location = `${address}, ${city}, ${state}`;
+  
   const getValidImageUrl = (url: string | undefined): string => {
     if (!url || typeof url !== "string") return PlaceHolder.src;
 
