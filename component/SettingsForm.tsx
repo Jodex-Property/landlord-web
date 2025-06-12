@@ -28,19 +28,16 @@ import useApi from "./hook/request";
 import { showToast } from "./toast";
 import { ProfileData } from "./types";
 import ImageCard from "./common/ImageCard";
+import { ClipLoader } from "react-spinners";
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
 const SettingsForm = () => {
-  const userToken = localStorage.getItem("token");
-  const { makeRequest } = useApi("/user/profile-picture", "PUT", {
-    Authorization: `Bearer ${userToken}`,
-  });
+ 
+  const { makeRequest, loading } = useApi("/user/profile-picture", "PUT",);
 
   const [profile, setProfile] = useState<ProfileData | null>(null);
-  const { makeRequest: getProfile } = useApi(`/auth/me`, "GET", {
-    Authorization: `Bearer ${userToken}`,
-  });
+  const { makeRequest: getProfile } = useApi(`/auth/me`, "GET");
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleUploadClick = () => {
@@ -171,7 +168,7 @@ const SettingsForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} disabled />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -341,11 +338,15 @@ const SettingsForm = () => {
                 </FormItem>
               )}
             />
-            <div className="col-span-1 md:col-span-2 flex justify-end gap-4">
+            <div className="col-span-1  md:col-span-2 flex justify-end gap-4">
               <Button variant="outline" type="button">
                 Discard
               </Button>
-              <Button type="submit">Save</Button>
+              {loading ? (
+                <ClipLoader loading={loading} />
+              ) : (
+                <Button className="cursor-pointer" type="submit">Save</Button>
+              )}
             </div>
           </form>
         </Form>
