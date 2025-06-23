@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JODEX",
-  description: "WELCOME TO JODEX",
+  title: "JODEX Landlord Portal",
+  description: "Smart Renting Made Simple",
 };
 
 export default function RootLayout({
