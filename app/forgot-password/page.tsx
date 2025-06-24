@@ -1,29 +1,28 @@
 import SwiperSlides from "@/components-custom/common/SwiperSlides";
-import VerificationForm from "@/components-custom/VerificationForm";
+import ForgetPasswordForm from "@/components-custom/forget-password-form";
 import Image from "next/image";
 
-
-const VerificationPage = () => {
+const ForgotPasswordPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="w-full h-full grid lg:grid-cols-2">
         <div className="bg-muted hidden lg:block shadow-lg">
-          <SwiperSlides />
+            <SwiperSlides />
         </div>
 
         <div className="max-w-4xl m-auto w-full flex flex-col items-center">
-          <Image
+           <Image
             src="/assets/img/jodex-logo.png"
             alt="Jodex logo"
             width={150}
             height={150}
             className="mx-auto mb-10"
           />
-          <VerificationForm />
+          <ForgetPasswordForm />        
         </div>
       </div>
     </div>
   );
 };
 
-export default VerificationPage;
+export default ForgotPasswordPage;

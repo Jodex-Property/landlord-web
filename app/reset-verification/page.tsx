@@ -1,9 +1,10 @@
+
 import SwiperSlides from "@/components-custom/common/SwiperSlides";
-import VerificationForm from "@/components-custom/VerificationForm";
+import PasswordVerification from "@/components-custom/password-verification";
 import Image from "next/image";
 
 
-const VerificationPage = () => {
+const ResetVerificationPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="w-full h-full grid lg:grid-cols-2">
@@ -19,11 +20,11 @@ const VerificationPage = () => {
             height={150}
             className="mx-auto mb-10"
           />
-          <VerificationForm />
+          <PasswordVerification />
         </div>
       </div>
     </div>
   );
 };
 
-export default VerificationPage;
+export default ResetVerificationPage;
