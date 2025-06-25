@@ -34,7 +34,7 @@ type ProfileFormValues = z.infer<typeof profileSchema>;
 
 const SettingsForm = () => {
  
-  const { makeRequest, loading } = useApi("/user/profile-picture", "PUT",);
+  const { makeRequest, loading } = useApi("/users/profile-picture", "PUT",);
 
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const { makeRequest: getProfile } = useApi(`/auth/me`, "GET");

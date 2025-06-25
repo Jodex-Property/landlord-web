@@ -48,7 +48,9 @@ export default function useApi(
         headers: {
           Authorization: `Bearer ${token}`,
           ...headers,
-          ...(contentType !== "multipart/form-data" && { "Content-Type": contentType }),
+          ...(contentType !== "multipart/form-data" && {
+            "Content-Type": contentType,
+          }),
         },
         body: body,
       });
@@ -62,7 +64,7 @@ export default function useApi(
       return [json, res.status];
     } catch (error: any) {
       setLoading(false);
-       console.error("Request failed:", error);
+      console.error("Request failed:", error);
       return [null, 0];
     }
   }
