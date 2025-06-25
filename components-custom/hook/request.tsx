@@ -52,7 +52,9 @@ export default function useApi(
         headers: {
           ...(token && { Authorization: `Bearer ${token}` }),
           ...headers,
-          ...(contentType !== "multipart/form-data" && { "Content-Type": contentType }),
+          ...(contentType !== "multipart/form-data" && {
+            "Content-Type": contentType,
+          }),
         },
         body: body,
       });
