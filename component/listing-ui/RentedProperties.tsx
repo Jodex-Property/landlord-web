@@ -72,32 +72,7 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
           </div>
         </div>
 
-        <div className="flex flex-col p-3 flex-1">
-          <div className="flex flex-col h-full justify-between">
-            <div>
-              <p className="text-[15px] font-medium">{price}</p>
-              <div className="flex items-center gap-1 text-xs text-[#7F7F7F] mt-1 mb-3">
-                <MapPin className="w-3 h-3" />
-                <span>{location}</span>
-              </div>
-              <hr className="w-20 h-[2px] bg-[#FF5B19] mb-3" />
-              <div className="flex flex-col">
-                <h2 className="text-md mb-2 font-semibold">Overview</h2>
-                <div className="flex items-center justify-between mb-2">
-                  <div>
-                    <p className="text-[15px] font-medium">{title}</p>
-                    <p className="text-[14px] font-light text-[#FF5B19]">
-                      {price}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Trash2Icon className="w-4 h-4 cursor-pointer" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
       </div>
 
       {/* Modal */}
@@ -131,7 +106,6 @@ interface PropertyCardsProps {
 
 const PropertyCards = ({ rentedProperties }: PropertyCardsProps) => {
   if (!Array.isArray(rentedProperties)) {
-    console.error("Expected listings to be an array, got:", rentedProperties);
     return <p>No listings available.</p>;
   }
   return (

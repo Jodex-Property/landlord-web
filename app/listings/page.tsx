@@ -3,7 +3,9 @@ import SideNavBar from "@/component/common/SideNavBar";
 import TopNavBar from "@/component/common/TopNavBar";
 import useRequest from "@/component/hook/use-req";
 import Listings from "@/component/Listings";
+import Pagination from "@/component/pagination";
 import { ProfileData, Property } from "@/component/types";
+import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 
@@ -15,14 +17,19 @@ const ListingPage = () => {
   const { makeRequest: getListing } = useRequest("/properties", "GET");
   const { makeRequest: getProperties } = useRequest("/rent/rented", "GET");
   const [profile, setProfile] = useState<ProfileData | null>(null);
-
   const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET");
+  const searchParams = useSearchParams();
+  const initialPage = Number(searchParams.get("page")) || 1;
+  const [currentPage, setCurrentPage] = useState(initialPage);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchProfile = async () => {
       const [response] = await getProfile();
       if (response) {
         setProfile(response);
+        setTotalPages(Math.ceil(response.total / itemsPerPage));
       }
     };
     fetchProfile();
@@ -30,23 +37,34 @@ const ListingPage = () => {
 
   useEffect(() => {
     const fetchListing = async () => {
-      const [response] = await getListing();
+      const [response] = await getListing(undefined, {
+        page: currentPage,
+        limit: itemsPerPage,
+      });
       if (response) {
         setListings(response?.properties);
+        setTotalPages(Math.ceil(response.total / itemsPerPage));
       }
     };
     fetchListing();
-  }, []);
+  }, [currentPage]);
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const [response] = await getProperties();
+      const [response] = await getProperties(undefined, {
+        page: currentPage,
+        limit: itemsPerPage,
+      });
       if (response) {
         setRentedProperties(response);
       }
     };
     fetchProperties();
-  }, []);
+  }, [currentPage]);
+
+  function handlePageChange(page: number) {
+    setCurrentPage(page);
+  }
 
   return (
     <div className="min-h-screen flex">
@@ -58,6 +76,16 @@ const ListingPage = () => {
           <TopNavBar profile={profile} />
           {listings && rentedProperties && (
             <Listings listings={listings} rentedProperties={rentedProperties} />
+          )}
+
+          {totalPages > 1 && (
+            <div className="flex flex-col items-center justify-center ">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
           )}
         </div>
       ) : (

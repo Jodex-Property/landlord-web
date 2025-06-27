@@ -52,9 +52,9 @@ const Listings = ({ listings, rentedProperties }: PropertyCards) => {
             <RentedProperties rentedProperties={rentedProperties} />
           )}
         </TabsContent>
-        <TabsContent value="marketPlace">
+        {/* <TabsContent value="marketPlace">
           <MarketplaceCards />
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
       {/* Modal */}
       {isModalOpen && (
