@@ -29,7 +29,7 @@ const DashboardPage = () => {
       }
     };
     fetchDashboard();
-  }, [getDashboard]);
+  }, []);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -39,7 +39,7 @@ const DashboardPage = () => {
       }
     };
     fetchProfile();
-  }, [getProfile]);
+  }, []);
 
   return (
     <div className="min-h-screen flex bg-gray-50">
