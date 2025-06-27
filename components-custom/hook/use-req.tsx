@@ -4,6 +4,7 @@
 import { useState, useEffect } from "react";
 import { showToast } from "../toast";
 
+
 const baseURL =
   process.env.NEXT_PUBLIC_BACKEND_URL ||
   "https://backend-app.jodexservices.com/api/v1";
@@ -17,6 +18,17 @@ export default function useRequest(
   const [response, setResponse] = useState<any>();
   const [statusCode, setStatusCode] = useState(0);
   const [token, setToken] = useState<string | null>(null);
+<<<<<<< HEAD:component/hook/use-req.tsx
+=======
+  // const token = localStorage.getItem("token");
+
+    useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedToken = localStorage.getItem("token");
+      setToken(storedToken);
+    }
+  }, []);
+>>>>>>> f9bf94f577133e9f41dfa935e325d6db85951c71:components-custom/hook/use-req.tsx
 
   // Get token on client side only
   useEffect(() => {

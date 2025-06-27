@@ -1,10 +1,10 @@
-"use client";
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import Listings from "@/component/Listings";
-import Pagination from "@/component/pagination";
-import { ProfileData, Property } from "@/component/types";
+
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import Listings from "@/components-custom/Listings";
+import Pagination from "@/components-custom/pagination";
+import { ProfileData, Property } from "@/components-custom/types";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
@@ -33,7 +33,7 @@ const ListingPage = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [getProfile]);
 
   useEffect(() => {
     const fetchListing = async () => {

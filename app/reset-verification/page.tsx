@@ -1,6 +1,6 @@
 
-import SwiperSlides from "@/component/common/SwiperSlides";
-import PasswordVerification from "@/component/password-verification";
+import SwiperSlides from "@/components-custom/common/SwiperSlides";
+import PasswordVerification from "@/components-custom/password-verification";
 import Image from "next/image";
 
 

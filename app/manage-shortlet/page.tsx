@@ -1,4 +1,4 @@
-import SideNavBar from "@/component/common/SideNavBar";
+import SideNavBar from "@/components-custom/common/SideNavBar";
 import React from "react";
 
 const ManageShortletPage = () => {

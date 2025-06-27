@@ -1,6 +1,7 @@
 
-import SwiperSlides from "@/component/common/SwiperSlides";
-import ResetPassword from "@/component/reset-password-form";
+
+import SwiperSlides from "@/components-custom/common/SwiperSlides";
+import ResetPassword from "@/components-custom/reset-password-form";
 import Image from "next/image";
 
 const ResetPasswordPage = () => {

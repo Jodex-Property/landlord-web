@@ -1,25 +1,39 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
+import ImageCard from "@/components-custom/common/ImageCard";
 import SideNavBar from "@/components-custom/common/SideNavBar";
 import TopNavBar from "@/components-custom/common/TopNavBar";
-import useRequest from "@/components-custom/hook/use-req";
 import SettingsForm from "@/components-custom/SettingsForm";
 import { ProfileData } from "@/components-custom/types";
-import React, { useEffect, useState } from "react";
 
-export default function SettingsPage() {
+export default function SettingsContent() {
   const [profile, setProfile] = useState<ProfileData | null>(null);
-  const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET");
 
   useEffect(() => {
     const fetchProfile = async () => {
-      const [response] = await getProfile();
-      if (response) {
-        setProfile(response);
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const res = await fetch("/auth/me", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) throw new Error("Failed to fetch profile");
+
+        const data = await res.json();
+        setProfile(data);
+      } catch (err) {
+        console.error("Error fetching profile:", err);
       }
     };
+
     fetchProfile();
-  }, [getProfile]);
+  }, []);
 
   return (
     <div className="min-h-screen flex">
@@ -29,6 +43,7 @@ export default function SettingsPage() {
       <div className="right w-full flex gap-2 flex-col">
         <TopNavBar profile={profile} />
         <div className="bg-white shadow-2xl rounded-lg p-4 mx-5 my-10">
+          <ImageCard />
           <SettingsForm />
         </div>
       </div>

@@ -1,12 +1,15 @@
-import VerificationForm from "@/component/VerificationForm";
+import SwiperSlides from "@/components-custom/common/SwiperSlides";
+import VerificationForm from "@/components-custom/VerificationForm";
 import Image from "next/image";
-import React from "react";
+
 
 const VerificationPage = () => {
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="w-full h-full grid lg:grid-cols-2">
-        <div className="bg-muted hidden lg:block shadow-lg" />
+        <div className="bg-muted hidden lg:block shadow-lg">
+          <SwiperSlides />
+        </div>
 
         <div className="max-w-4xl m-auto w-full flex flex-col items-center">
           <Image

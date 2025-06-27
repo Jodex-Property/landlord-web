@@ -1,29 +1,36 @@
-"use client"
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import useRequest from "@/component/hook/use-req";
-import { ProfileData } from "@/component/types";
+"use client";
+export const dynamic = "force-dynamic";
+
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import useRequest from "@/components-custom/hook/use-req";
+import { ProfileData } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 
 const DeclutterItemPage = () => {
-  const userToken = localStorage.getItem("token");
-      const [profile, setProfile] = useState<ProfileData | null>(null);
-    
-      const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
-        Authorization: `Bearer ${userToken}`,
-      });
-    
-      useEffect(() => {
-        const fetchProfile = async () => {
-          const [response] = await getProfile();
-          if (response) {
-            setProfile(response);
-          }
-        };
-        fetchProfile();
-      }, []);
-  
-  
+  const [profile, setProfile] = useState<ProfileData | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
+  const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
+    Authorization: `Bearer ${token}`,
+  });
+
+  useEffect(() => {
+    const userToken = localStorage.getItem("token");
+    setToken(userToken);
+  }, []);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!token) return;
+      const [response] = await getProfile();
+      if (response) {
+        setProfile(response);
+      }
+    };
+    fetchProfile();
+  }, [token, getProfile]);
+
   return (
     <div className="h-screen flex">
       <nav className="bg-white w-80 h-screen flex flex-col gap-10 border-r border-slate-100 shadow-lg">

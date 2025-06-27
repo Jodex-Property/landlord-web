@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";
-import SideNavBar from "@/component/common/SideNavBar";
-import TopNavBar from "@/component/common/TopNavBar";
-import StatsSection from "@/component/dashboard-ui/StatsSection";
-import TopCards from "@/component/dashboard-ui/TopCards";
-import useRequest from "@/component/hook/use-req";
-import { ChartData, MetricData, ProfileData } from "@/component/types";
+import SideNavBar from "@/components-custom/common/SideNavBar";
+import TopNavBar from "@/components-custom/common/TopNavBar";
+import StatsSection from "@/components-custom/dashboard-ui/StatsSection";
+import TopCards from "@/components-custom/dashboard-ui/TopCards";
+import useRequest from "@/components-custom/hook/use-req";
+import { ChartData, MetricData, ProfileData } from "@/components-custom/types";
 import React, { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 
@@ -27,7 +29,7 @@ const DashboardPage = () => {
       }
     };
     fetchDashboard();
-  }, []);
+  }, [getDashboard]);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -37,7 +39,7 @@ const DashboardPage = () => {
       }
     };
     fetchProfile();
-  }, []);
+  }, [getProfile]);
 
   return (
     <div className="min-h-screen flex bg-gray-50">

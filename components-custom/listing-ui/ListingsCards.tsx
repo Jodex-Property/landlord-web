@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+ 
 "use client";
-import { MapPin, PencilIcon, Trash2Icon, CircleXIcon } from "lucide-react";
+import { MapPin, Trash2Icon, CircleXIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import EditPropertyForm from "../forms/EditPropertyForm";
@@ -60,6 +60,16 @@ const ListingCard = ({ listings }: ListingCardProps) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      const [response] = await getSingleListing();
+      if (response) {
+        setSingleListing(response);
+      }
+    };
+    fetchListing();
+  }, [getSingleListing]);
 
 
 

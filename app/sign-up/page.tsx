@@ -1,6 +1,6 @@
 "use client";
-import SwiperSlides from "@/component/common/SwiperSlides";
-import SignupForm from "@/component/SignupForm";
+import SwiperSlides from "@/components-custom/common/SwiperSlides";
+import SignupForm from "@/components-custom/SignupForm";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

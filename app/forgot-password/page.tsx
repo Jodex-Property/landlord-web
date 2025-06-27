@@ -1,5 +1,6 @@
-import SwiperSlides from "@/component/common/SwiperSlides";
-import ForgetPasswordForm from "@/component/forgot-password-form";
+
+import SwiperSlides from "@/components-custom/common/SwiperSlides";
+import ForgetPasswordForm from "@/components-custom/forgot-password-form";
 import Image from "next/image";
 
 const ForgotPasswordPage = () => {

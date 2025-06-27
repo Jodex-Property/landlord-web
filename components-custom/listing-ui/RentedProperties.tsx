@@ -1,9 +1,9 @@
-import ViewRentedProperty from "@/components-custom/listing-ui/ViewRentedProperty";
-import { Property } from "@/components-custom/types";
 import { MapPin, CircleXIcon, PencilIcon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
-
+import ViewRentedProperty from "./ViewRentedProperty";
+import { Property } from "../types";
+import PlaceHolder from "../../public/assets/img/house-placeholder.jpg";
 
 interface PropertyCardProps {
   rentedProperties: Property;
@@ -26,7 +26,7 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
   const location = `${address}, ${city}, ${state}`;
   
   const getValidImageUrl = (url: string | undefined): string => {
-    if (!url || typeof url !== "string") return "";
+    if (!url || typeof url !== "string") return PlaceHolder.src;
 
     // Fix 'undefined' in domain
     if (url.includes("s3.undefined.amazonaws.com")) {
@@ -42,7 +42,7 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
   const displayImage =
     pictures && pictures.length > 0
       ? getValidImageUrl(pictures[0])
-      : "";
+      : PlaceHolder.src;
 
   return (
     <>

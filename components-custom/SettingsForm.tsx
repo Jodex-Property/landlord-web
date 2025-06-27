@@ -28,7 +28,6 @@ import useApi from "./hook/request";
 import { showToast } from "./toast";
 import { ProfileData } from "./types";
 import ImageCard from "./common/ImageCard";
-import { ClipLoader } from "react-spinners";
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
@@ -121,7 +120,7 @@ const SettingsForm = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [getProfile, form]);
 
   return (
     <Card className=" shadow-none border-none">
@@ -342,11 +341,7 @@ const SettingsForm = () => {
               <Button variant="outline" type="button">
                 Discard
               </Button>
-              {loading ? (
-                <ClipLoader loading={loading} />
-              ) : (
-                <Button className="cursor-pointer" type="submit">Save</Button>
-              )}
+              <Button className="cursor-pointer" type="submit">Save</Button>
             </div>
           </form>
         </Form>
