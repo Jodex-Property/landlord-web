@@ -1,4 +1,5 @@
-
+/* eslint-disable react-hooks/exhaustive-deps */
+"use client";
 import SideNavBar from "@/components-custom/common/SideNavBar";
 import TopNavBar from "@/components-custom/common/TopNavBar";
 import useRequest from "@/components-custom/hook/use-req";
