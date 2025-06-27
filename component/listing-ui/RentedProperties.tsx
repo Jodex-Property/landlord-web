@@ -71,8 +71,6 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
             ))}
           </div>
         </div>
-
-      
       </div>
 
       {/* Modal */}
