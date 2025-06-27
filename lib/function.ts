@@ -29,7 +29,6 @@ export function formatCurrency(
       return "amount must be 200 above and less than 5,000,000";
     }
   } catch (e) {
-   console.log(e)
     return "N/A";
   }
 }

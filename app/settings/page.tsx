@@ -1,5 +1,4 @@
 "use client";
-import ImageCard from "@/component/common/ImageCard";
 import SideNavBar from "@/component/common/SideNavBar";
 import TopNavBar from "@/component/common/TopNavBar";
 import useRequest from "@/component/hook/use-req";
@@ -33,7 +32,6 @@ const SettingsPage = () => {
       <div className="right w-full flex gap-2 flex-col">
         <TopNavBar profile={profile} />
         <div className="bg-white shadow-2xl rounded-lg p-4 mx-5 my-10">
-          <ImageCard />
           <SettingsForm />
         </div>
       </div>

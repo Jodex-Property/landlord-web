@@ -1,30 +1,14 @@
-import {
-  BathIcon,
-  BedSingleIcon,
-  CarIcon,
-  HouseIcon,
-  LayoutGridIcon,
-  MapPin,
-  PickaxeIcon,
-  LucideIcon,
-  CircleXIcon,
-} from "lucide-react";
+import { MapPin, CircleXIcon, PencilIcon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import ViewRentedProperty from "./ViewRentedProperty";
-
-interface OverviewItem {
-  Icon: LucideIcon;
-  label: string;
-}
+import { Property } from "../types";
+import PlaceHolder from "../../public/assets/img/house-placeholder.jpg";
 
 interface PropertyCardProps {
-  price: string;
-  location: string;
-  overview: OverviewItem[][];
+  rentedProperties: Property;
 }
-
-const PropertyCard: React.FC<PropertyCardProps> = ({ price, location, overview }) => {
+const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -35,6 +19,31 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ price, location, overview }
     setIsModalOpen(false);
   };
 
+  const { address, rent, city, pictures, id, state, propertyType, user } =
+    rentedProperties;
+  const title = `${propertyType} - ${user?.businessName ?? "No Name"}`;
+  const price = `₦${rent?.toLocaleString() ?? "0"}`;
+  const location = `${address}, ${city}, ${state}`;
+  
+  const getValidImageUrl = (url: string | undefined): string => {
+    if (!url || typeof url !== "string") return PlaceHolder.src;
+
+    // Fix 'undefined' in domain
+    if (url.includes("s3.undefined.amazonaws.com")) {
+      return url.replace(
+        "s3.undefined.amazonaws.com",
+        "s3.eu-north-1.amazonaws.com"
+      );
+    }
+
+    return url;
+  };
+
+  const displayImage =
+    pictures && pictures.length > 0
+      ? getValidImageUrl(pictures[0])
+      : PlaceHolder.src;
+
   return (
     <>
       <div
@@ -43,11 +52,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ price, location, overview }
       >
         <div className="flex flex-col p-2">
           <Image
-            src="/assets/img/jodex-img-2.png"
-            alt="Property image"
-            width={162}
-            height={162}
-            className="rounded-md object-cover"
+            src={displayImage}
+            alt="property"
+            width={500}
+            height={500}
+            className="rounded-md object-cover h-48 w-full"
           />
           <div className="flex gap-2 mt-3">
             {[1, 2, 3].map((_, index) => (
@@ -55,41 +64,15 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ price, location, overview }
                 key={index}
                 src="/assets/img/jodex-img-3.png"
                 alt={`Property thumbnail ${index + 1}`}
-                width={50}
-                height={50}
+                width={40}
+                height={40}
                 className="rounded-md object-cover"
               />
             ))}
           </div>
         </div>
 
-        <div className="flex flex-col p-3 flex-1">
-          <div className="flex flex-col h-full justify-between">
-            <div>
-              <p className="text-[15px] font-medium">{price}</p>
-              <div className="flex items-center gap-1 text-xs text-[#7F7F7F] mt-1 mb-3">
-                <MapPin className="w-3 h-3" />
-                <span>{location}</span>
-              </div>
-              <hr className="w-20 h-[2px] bg-[#FF5B19] mb-3" />
-              <div className="flex flex-col">
-                <h2 className="text-md mb-2 font-semibold">Overview</h2>
-                <div className="flex space-x-8">
-                  {overview.map((group, groupIndex) => (
-                    <div key={groupIndex} className="flex flex-col space-y-2">
-                      {group.map(({ Icon, label }, itemIndex) => (
-                        <div key={itemIndex} className="flex items-center gap-2 text-sm">
-                          <Icon className="w-4 h-4 text-gray-600" />
-                          <span>{label}</span>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
       </div>
 
       {/* Modal */}
@@ -102,7 +85,11 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ price, location, overview }
                 className="px-4 py-2 rounded-full cursor-pointer"
                 onClick={handleCloseModal}
               >
-                <CircleXIcon width="24px" height="24px" className="text-blue-950" />
+                <CircleXIcon
+                  width="24px"
+                  height="24px"
+                  className="text-blue-950"
+                />
               </button>
             </div>
             <ViewRentedProperty />
@@ -113,52 +100,24 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ price, location, overview }
   );
 };
 
-const RentedProperties: React.FC = () => {
-  const properties: PropertyCardProps[] = [
-    {
-      price: "₦1,000,000/Year",
-      location: "Blantyre Street, Maitama",
-      overview: [
-        [
-          { Icon: BedSingleIcon, label: "4 Bedrooms" },
-          { Icon: BathIcon, label: "3 Baths" },
-          { Icon: LayoutGridIcon, label: "1200 sqft" },
-        ],
-        [
-          { Icon: HouseIcon, label: "Duplex" },
-          { Icon: CarIcon, label: "Parking" },
-          { Icon: PickaxeIcon, label: "Built 2020" },
-        ],
-      ],
-    },
-    {
-      price: "₦1,000,000/Year",
-      location: "Blantyre Street, Maitama",
-      overview: [
-        [
-          { Icon: BedSingleIcon, label: "4 Bedrooms" },
-          { Icon: BathIcon, label: "3 Baths" },
-          { Icon: LayoutGridIcon, label: "1200 sqft" },
-        ],
-        [
-          { Icon: HouseIcon, label: "Duplex" },
-          { Icon: CarIcon, label: "Parking" },
-          { Icon: PickaxeIcon, label: "Built 2020" },
-        ],
-      ],
-    },
-  ];
+interface PropertyCardsProps {
+  rentedProperties: Property[];
+}
 
+const PropertyCards = ({ rentedProperties }: PropertyCardsProps) => {
+  if (!Array.isArray(rentedProperties)) {
+    return <p>No listings available.</p>;
+  }
   return (
-    <div className="p-6 bg-[#F2F5F8] shadow-md rounded-md mt-10">
-      <h1 className="text-[20px] font-semibold mb-6">Rented Properties</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {properties.map((property, index) => (
-          <PropertyCard key={index} {...property} />
+    <>
+      <h1 className="p-6 text-2xl font-semibold">Rented Properties</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-[#F2F5F8] shadow-sm rounded-md">
+        {rentedProperties?.map((property) => (
+          <PropertyCard key={property.id} rentedProperties={property} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
-export default RentedProperties;
+export default PropertyCards;

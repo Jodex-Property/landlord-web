@@ -111,7 +111,7 @@ const onSubmit = async (data: LoginFormValues) => {
         />
 
         <a
-          href="#"
+          href="/forgot-password"
           className="text-blue-950 font-medium text-[15px] hover:underline"
         >
           Forget Password?

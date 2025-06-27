@@ -43,35 +43,33 @@ const SignupForm = () => {
     },
   });
 
-const onSubmit = async (data: SignFormValues) => {
-  const payload = {
-    email: data.email,
-    password: data.password,
-    confirmPassword: data.confirmPassword,
-    category: data.category,
-  };
+  const onSubmit = async (data: SignFormValues) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      category: data.category,
+    };
 
-  const [res, status] = await makeRequest({ data: payload });
+    const [res, status] = await makeRequest({ data: payload });
 
-  if (status === 200) {
-    // Save the full response in localStorage
-    localStorage.setItem("user", JSON.stringify(res));
+    if (status === 200) {
+      // Save the full response in localStorage
+      localStorage.setItem("user", JSON.stringify(res));
 
-    // Optionally still store token separately
-    if ((res as any)?.token) {
-      localStorage.setItem("token", (res as any).token);
+      // Optionally still store token separately
+      if ((res as any)?.token) {
+        localStorage.setItem("token", (res as any).token);
+      }
+
+      showToast("Signup successful!", true, { position: "top-right" });
+      form.reset();
+      router.push("/verification-code");
+    } else {
+      const message = (res as any)?.error || "Signup failed. Please try again.";
+      showToast(message, false, { position: "top-right" });
     }
-
-    showToast("Signup successful!", true, { position: "top-right" });
-    form.reset();
-    router.push("/verification-code");
-  } else {
-    const message = (res as any)?.error || "Signup failed. Please try again.";
-    showToast(message, false, { position: "top-right" });
-  }
-};
-
-
+  };
 
   return (
     <Form {...form}>
@@ -83,10 +81,7 @@ const onSubmit = async (data: SignFormValues) => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your email address"
-                  {...field}
-                />
+                <Input placeholder="Enter your email address" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -150,12 +145,7 @@ const onSubmit = async (data: SignFormValues) => {
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="TENANT">Tenant</SelectItem>
                     <SelectItem value="LANDLORD">Landlord</SelectItem>
-                    <SelectItem value="PROPERTY-MANAGER">
-                      Property Manager
-                    </SelectItem>
-                    <SelectItem value="AGENT">Agent</SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
