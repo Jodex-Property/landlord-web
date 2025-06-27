@@ -33,7 +33,7 @@ const ForgetPasswordForm = () => {
       email: data.email,
     };
 
-    const [response, status] = await makeRequest({ data: payload });
+    const [response, status] = await makeRequest(payload);
     if (status === 201 || status === 200) {
       showToast(response.message, true, { position: "top-right" });
       form.reset();

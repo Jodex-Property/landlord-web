@@ -47,7 +47,7 @@ const onSubmit = async (data: LoginFormValues) => {
     password: data.password,
   };
 
-  const [res, status] = await makeRequest({ data: payload });
+  const [res, status] = await makeRequest(payload);
 
   const response = res as AuthResponse;
 

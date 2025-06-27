@@ -61,7 +61,7 @@ const PasswordVerification = () => {
       code: data.code,
     };
 
-    const [res, status] = await makeRequest({ data: payload });
+    const [res, status] = await makeRequest(payload);
 
     if (status === 200) {
       showToast("Verification successful!", true, { position: "top-right" });

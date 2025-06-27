@@ -51,7 +51,7 @@ const SignupForm = () => {
       category: data.category,
     };
 
-    const [res, status] = await makeRequest({ data: payload });
+    const [res, status] = await makeRequest(payload);
 
     if (status === 200) {
       // Save the full response in localStorage
