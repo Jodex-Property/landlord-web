@@ -7,10 +7,11 @@ import Listings from "@/components-custom/Listings";
 import Pagination from "@/components-custom/pagination";
 import { ProfileData, Property } from "@/components-custom/types";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { ClipLoader } from "react-spinners";
 
-const ListingPage = () => {
+// Create a separate component for the listing content that uses useSearchParams
+const ListingContent = () => {
   const [listings, setListings] = useState<Property[] | null>(null);
   const [rentedProperties, setRentedProperties] = useState<Property[] | null>(
     null
@@ -34,7 +35,7 @@ const ListingPage = () => {
       }
     };
     fetchProfile();
-  }, [getProfile]);
+  }, []);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -95,6 +96,19 @@ const ListingPage = () => {
         </div>
       )}
     </div>
+  );
+};
+
+// Main component wrapped with Suspense
+const ListingPage = () => {
+  return (
+    <Suspense fallback={
+      <div className="flex w-full justify-center items-center h-screen">
+        <ClipLoader size={70} />
+      </div>
+    }>
+      <ListingContent />
+    </Suspense>
   );
 };
 
