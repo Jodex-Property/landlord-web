@@ -69,7 +69,7 @@ const ListingCard = ({ listings }: ListingCardProps) => {
       }
     };
     fetchListing();
-  }, [getSingleListing]);
+  }, []);
 
 
 

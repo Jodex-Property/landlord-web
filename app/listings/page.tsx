@@ -34,7 +34,7 @@ const ListingContent = () => {
       }
     };
     fetchProfile();
-  }, [getProfile]);
+  }, []);
 
   useEffect(() => {
     const fetchListing = async () => {
