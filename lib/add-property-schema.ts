@@ -49,10 +49,15 @@ export const addPropertySchema = z.object({
     .string()
     .min(10, { message: "Description must be at least 10 characters" })
     .max(500),
-pictures: z
-  .array(z.any())
-  .max(5, { message: "You can upload at most 5 images" })
-  .optional(),
+// pictures: z
+//   .array(z.any())
+//   .max(5, { message: "You can upload at most 5 images" })
+//   .optional(),
+
+   pictures: z.array(z.any())
+    .refine((files) => files.length > 0 && files.length <= 5, {
+      message: "You must upload between 1 and 5 images",
+    }),
 
   city: z.string().min(2).max(50),
   state: z.string().min(2).max(50),

@@ -32,7 +32,7 @@ const FinancialStatementPage = () => {
       }
     };
     fetchProfile();
-  }, [getProfile]);
+  }, []);
   return (
     <div className="min-h-screen flex">
       <nav className="bg-white w-80 flex flex-col gap-10 border-r border-slate-100 shadow-lg">

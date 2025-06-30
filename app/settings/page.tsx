@@ -19,7 +19,7 @@ export default function SettingsPage() {
       }
     };
     fetchProfile();
-  }, [getProfile]);
+  }, []);
 
   return (
     <div className="min-h-screen flex">

@@ -29,7 +29,7 @@ const DeclutterItemPage = () => {
       }
     };
     fetchProfile();
-  }, [token, getProfile]);
+  }, [token]);
 
   return (
     <div className="h-screen flex">
