@@ -120,9 +120,15 @@ const AddPropertyForm = () => {
     formData.append("amenities", JSON.stringify(data.amenities ?? []));
 
     // ✅ Send all pictures under the same "pictures" key
-    (data.pictures ?? []).forEach((file: File) => {
-      formData.append("pictures[]", file); // <-- note the [] here
-    });
+    // (data.pictures ?? []).forEach((file: File) => {
+    //   formData.append("pictures[]", file); // <-- note the [] here
+    // });
+
+     if (Array.isArray(data.pictures)) {
+      data.pictures.forEach((file) => {
+        formData.append("pictures", file); // Appending each file individually
+      });
+    }
 
     const [res, status] = await makeRequest(formData);
 
@@ -132,6 +138,7 @@ const AddPropertyForm = () => {
       });
       form.reset();
       router.push('listings')
+      window.location.reload();
     } else {
       const message =
         (res as any)?.message || "Submission failed. Please try again.";

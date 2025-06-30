@@ -30,7 +30,7 @@ const FindArtisansPage = () => {
         }
       };
       fetchProfile();
-    }, [getProfile]);
+    }, []);
   return (
     <div className="h-screen flex">
       <nav className="bg-white w-80 h-screen flex flex-col gap-10 border-r border-slate-100 shadow-lg">

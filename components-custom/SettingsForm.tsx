@@ -19,7 +19,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -28,17 +28,24 @@ import useApi from "./hook/request";
 import { showToast } from "./toast";
 import { ProfileData } from "./types";
 import ImageCard from "./common/ImageCard";
+import useRequest from "./hook/use-req";
 
 type ProfileFormValues = z.infer<typeof profileSchema>;
 
 const SettingsForm = () => {
- 
-  const { makeRequest, loading } = useApi("/user/update", "PUT",);
-
+  const { makeRequest, loading } = useApi("/user/update", "PATCH");
+  const [userToken, setUserToken] = useState<string | null>(null);
   const [profile, setProfile] = useState<ProfileData | null>(null);
-  const { makeRequest: getProfile } = useApi(`/auth/me`, "GET");
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const [loadingProfile, setLoadingProfile] = useState(true);
 
+  const hasFetchedProfile = useRef(false);
+
+  // Memoize headers to prevent recreating the object on every render
+const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
+    Authorization: userToken ? `Bearer ${userToken}` : "",
+  });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
@@ -60,6 +67,50 @@ const SettingsForm = () => {
       profilePicture: undefined,
     },
   });
+
+useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (token && token !== userToken) {  // Only update if token changed
+    setUserToken(token);
+  }
+}, [userToken]);  // Add
+
+   useEffect(() => {
+  const fetchProfile = async () => {
+    if (!userToken || hasFetchedProfile.current) return;
+    hasFetchedProfile.current = true;
+
+    setLoadingProfile(true);
+    try {
+      const [response] = await getProfile();
+      if (response) {
+        setProfile(response);
+        form.reset({
+          name: response.name || "",
+          email: response.email || "",
+          contactNumber: response.contactNumber || response.phone || "",
+          nin: response.nin || "",
+          profilePicture: response.profilePicture || "",
+          address: response.address || "",
+          dateOfBirth: response.dateOfBirth || "",
+          gender: response.gender || "",
+          maritalStatus: response.maritalStatus || "",
+          businessName: response.businessName || "",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    } finally {
+      setLoadingProfile(false);
+    }
+  };
+
+  fetchProfile();
+}, [userToken]);  // Only run when userToken
+
+
+
+ 
 
   const onSubmit = async (data: ProfileFormValues) => {
     const formData = new FormData();
@@ -97,30 +148,17 @@ const SettingsForm = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      const [response] = await getProfile();
-      if (response) {
-        setProfile(response);
-
-        // Only reset form values once when data is first loaded
-        form.reset({
-          name: response.name || response.name || "",
-          email: response.email || "",
-          contactNumber: response.contactNumber || response.phone || "",
-          nin: response.nin || "",
-          profilePicture: response.profilePicture || "",
-          address: response.address || "",
-          dateOfBirth: response.dateOfBirth || "",
-          gender: response.gender || "",
-          maritalStatus: response.maritalStatus || "",
-          businessName: response.businessName || "",
-        });
-      }
-    };
-
-    fetchProfile();
-  }, [getProfile, form]);
+  if (loadingProfile) {
+    return (
+      <Card className="mt-10 shadow-none border-none">
+        <CardContent>
+          <div className="flex justify-center items-center h-64">
+            <div className="text-gray-500">Loading profile...</div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className=" shadow-none border-none">
@@ -341,7 +379,9 @@ const SettingsForm = () => {
               <Button variant="outline" type="button">
                 Discard
               </Button>
-              <Button className="cursor-pointer" type="submit">Save</Button>
+              <Button className="cursor-pointer" type="submit">
+                Save
+              </Button>
             </div>
           </form>
         </Form>
