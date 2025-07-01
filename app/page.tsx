@@ -35,7 +35,7 @@ const LoginPage = () => {
             <p className="text-sm text-gray-500">
               Need an account?{" "}
               <a
-                href="#"
+                href="/sign-up"
                 className="text-blue-950 font-bold hover:underline"
               >
                 Sign up here
