@@ -24,7 +24,7 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
   const title = `${propertyType} - ${user?.businessName ?? "No Name"}`;
   const price = `₦${rent?.toLocaleString() ?? "0"}`;
   const location = `${address}, ${city}, ${state}`;
-  
+
   const getValidImageUrl = (url: string | undefined): string => {
     if (!url || typeof url !== "string") return PlaceHolder.src;
 
@@ -109,11 +109,15 @@ const PropertyCards = ({ rentedProperties }: PropertyCardsProps) => {
   return (
     <>
       <h1 className="p-6 text-2xl font-semibold">Rented Properties</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-[#F2F5F8] shadow-sm rounded-md">
-        {rentedProperties?.map((property) => (
-          <PropertyCard key={property.id} rentedProperties={property} />
-        ))}
-      </div>
+      {rentedProperties ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-6 bg-[#F2F5F8] shadow-sm rounded-md">
+          {rentedProperties?.map((property) => (
+            <PropertyCard key={property.id} rentedProperties={property} />
+          ))}
+        </div>
+      ) : (
+        <h1 className="text-gray-600">No rented properties available</h1>
+      )}
     </>
   );
 };

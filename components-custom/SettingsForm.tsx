@@ -19,7 +19,13 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, {
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+  useRef,
+} from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -41,7 +47,7 @@ const SettingsForm = () => {
   const hasFetchedProfile = useRef(false);
 
   // Memoize headers to prevent recreating the object on every render
-const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
+  const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
     Authorization: userToken ? `Bearer ${userToken}` : "",
   });
 
@@ -68,49 +74,47 @@ const { makeRequest: getProfile } = useRequest(`/auth/me`, "GET", {
     },
   });
 
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (token && token !== userToken) {  // Only update if token changed
-    setUserToken(token);
-  }
-}, [userToken]);  // Add
-
-   useEffect(() => {
-  const fetchProfile = async () => {
-    if (!userToken || hasFetchedProfile.current) return;
-    hasFetchedProfile.current = true;
-
-    setLoadingProfile(true);
-    try {
-      const [response] = await getProfile();
-      if (response) {
-        setProfile(response);
-        form.reset({
-          name: response.name || "",
-          email: response.email || "",
-          contactNumber: response.contactNumber || response.phone || "",
-          nin: response.nin || "",
-          profilePicture: response.profilePicture || "",
-          address: response.address || "",
-          dateOfBirth: response.dateOfBirth || "",
-          gender: response.gender || "",
-          maritalStatus: response.maritalStatus || "",
-          businessName: response.businessName || "",
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching profile:", error);
-    } finally {
-      setLoadingProfile(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token && token !== userToken) {
+      // Only update if token changed
+      setUserToken(token);
     }
-  };
+  }, [userToken]); // Add
 
-  fetchProfile();
-}, [userToken]);  // Only run when userToken
+  useEffect(() => {
+    const fetchProfile = async () => {
+      if (!userToken || hasFetchedProfile.current) return;
+      hasFetchedProfile.current = true;
 
+      setLoadingProfile(true);
+      try {
+        const [response] = await getProfile();
+        if (response) {
+          setProfile(response);
+          form.reset({
+            name: response.name || "",
+            email: response.email || "",
+            contactNumber: response.contactNumber || response.phone || "",
+            nin: response.nin || "",
+            profilePicture: response.profilePicture || "",
+            address: response.address || "",
+            dateOfBirth: response.dateOfBirth?.slice(0, 10) || "",
+            gender: response.gender || "",
+            maritalStatus: response.maritalStatus || "",
+            businessName: response.businessName || "",
+            option: response.option || "",
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      } finally {
+        setLoadingProfile(false);
+      }
+    };
 
-
- 
+    fetchProfile();
+  }, [userToken]); // Only run when userToken
 
   const onSubmit = async (data: ProfileFormValues) => {
     const formData = new FormData();
@@ -241,7 +245,7 @@ useEffect(() => {
               name="gender"
               control={form.control}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="w-full">
                   <FormLabel>Gender</FormLabel>
                   <Select
                     onValueChange={field.onChange}
