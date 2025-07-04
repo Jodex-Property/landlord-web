@@ -43,7 +43,7 @@ const ListingContent = () => {
         limit: itemsPerPage,
       });
       if (response) {
-        setListings(response?.properties);
+        setListings(response.data?.properties);
         setTotalPages(Math.ceil(response.total / itemsPerPage));
       }
     };

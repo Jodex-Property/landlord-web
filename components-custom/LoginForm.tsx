@@ -25,14 +25,15 @@ type AuthResponse = {
   user?: {
     id: string;
     email: string;
-    isVerified: boolean; 
+    isVerified: boolean;
   };
   message?: string;
+  error?: string;
 };
 
 const LoginForm = () => {
   const { loading, makeRequest } = useRequest("/auth/login", "POST");
-    const router = useRouter();
+  const router = useRouter();
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -41,37 +42,37 @@ const LoginForm = () => {
     },
   });
 
-const onSubmit = async (data: LoginFormValues) => {
-  const payload = {
-    email: data.email,
-    password: data.password,
-  };
+  const onSubmit = async (data: LoginFormValues) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+    };
 
-  const [res, status] = await makeRequest(payload);
+    const [res, status] = await makeRequest(payload);
 
-  const response = res as AuthResponse;
+    const response = res as AuthResponse;
 
-  if (status === 201 || status === 200) {
+    if (status === 201 || status === 200) {
       // Save the full response in localStorage
-    localStorage.setItem("user", JSON.stringify(res));
+      localStorage.setItem("user", JSON.stringify(res));
 
-    if (response.token) {
-      localStorage.setItem("token", response.token);
+      if (response.token) {
+        localStorage.setItem("token", response.token);
+      }
+
+      showToast("Login successful!", true, { position: "top-right" });
+      form.reset();
+      if (response.user?.isVerified === false) {
+        router.push("/verification-code");
+      } else {
+        router.push("/dashboard");
+      }
+    } else {
+      showToast(response.error || "Login failed. Please try again.", false, {
+        position: "top-right",
+      });
     }
-
-    showToast("Login successful!", true, { position: "top-right" });
-    form.reset();
- if (response.user?.isVerified === false) {
-    router.push("/verification-code");
-  } else {
-    router.push("/dashboard");
-  }
-  } else {
-    const message = response.message || "Login failed. Please try again.";
-    showToast(message, false, { position: "top-right" });
-  }
-};
-
+  };
 
   return (
     <Form {...form}>
@@ -83,10 +84,7 @@ const onSubmit = async (data: LoginFormValues) => {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Enter your email address"
-                  {...field}
-                />
+                <Input placeholder="Enter your email address" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,7 +119,7 @@ const onSubmit = async (data: LoginFormValues) => {
           type="submit"
           className="w-full mt-5 bg-blue-950 hover:bg-blue-900 cursor-pointer transition duration-300"
         >
-         {loading ? "Signing In..." : "Sign In"}
+          {loading ? "Signing In..." : "Sign In"}
         </Button>
       </form>
     </Form>
