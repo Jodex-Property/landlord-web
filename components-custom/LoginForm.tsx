@@ -26,6 +26,7 @@ type AuthResponse = {
     id: string;
     email: string;
     isVerified: boolean;
+    category:string;
   };
   message?: string;
   error?: string;
@@ -42,37 +43,41 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = async (data: LoginFormValues) => {
-    const payload = {
-      email: data.email,
-      password: data.password,
-    };
-
-    const [res, status] = await makeRequest(payload);
-
-    const response = res as AuthResponse;
-
-    if (status === 201 || status === 200) {
-      // Save the full response in localStorage
-      localStorage.setItem("user", JSON.stringify(res));
-
-      if (response.token) {
-        localStorage.setItem("token", response.token);
-      }
-
-      showToast("Login successful!", true, { position: "top-right" });
-      form.reset();
-      if (response.user?.isVerified === false) {
-        router.push("/verification-code");
-      } else {
-        router.push("/dashboard");
-      }
-    } else {
-      showToast(response.error || "Login failed. Please try again.", false, {
-        position: "top-right",
-      });
-    }
+const onSubmit = async (data: LoginFormValues) => {
+  const payload = {
+    email: data.email,
+    password: data.password,
   };
+
+  const [res, status] = await makeRequest(payload);
+
+  const response = res as AuthResponse;
+
+  if (status === 201 || status === 200) {
+    if (response.user?.category !== "LANDLORD") {
+      showToast("Only LANDLORD users can log in.", false, { position: "top-right" });
+      return;
+    }
+
+    localStorage.setItem("user", JSON.stringify(res));
+
+    if (response.token) {
+      localStorage.setItem("token", response.token);
+    }
+
+    showToast("Login successful", true, { position: "top-right" });
+    form.reset();
+
+    if (response.user?.isVerified === false) {
+      router.push("/verification-code");
+    } else {
+      router.push("/dashboard");
+    }
+  } else {
+    const error = response.error || "Login failed. Please try again.";
+    showToast(error, false, { position: "top-right" });
+  }
+};
 
   return (
     <Form {...form}>
