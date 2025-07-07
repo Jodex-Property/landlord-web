@@ -1,6 +1,6 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { MapPin, X } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -12,7 +12,7 @@ interface ListingCardProps {
 
 const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
   const [property, setProperty] = useState<Property>(singleListing);
-  const [duration, setDuration] = useState(property?.duration || "Annually");
+  // const [duration, setDuration] = useState(property?.duration || "Annually");
 
   // Function to handle amenity removal
   const removeAmenity = (amenity: string) => {
