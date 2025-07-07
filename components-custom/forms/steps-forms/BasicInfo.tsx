@@ -33,7 +33,7 @@ const BasicInfo = ({
         render={({ field }) => (
           <FormItem>
             <FormLabel>Property Type</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select onValueChange={field.onChange} value={field.value?.toString() ?? ""}>
               <FormControl className="w-full">
                 <SelectTrigger>
                   <SelectValue placeholder="Select property type" />
@@ -214,15 +214,18 @@ const BasicInfo = ({
         render={({ field }) => (
           <FormItem>
             <FormLabel>Lease Duration</FormLabel>
-            <Select onValueChange={field.onChange} value={field.value}>
+            <Select
+        onValueChange={(val) => field.onChange(Number(val))}
+        value={String(field.value ?? '')} // Safely convert number to string
+      >
               <FormControl className="w-full">
                 <SelectTrigger>
                   <SelectValue placeholder="Select duration" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                <SelectItem value="Short Term">Short Term</SelectItem>
-                <SelectItem value="Long Term">Long Term</SelectItem>
+                <SelectItem value="1">1 year</SelectItem>
+                <SelectItem value="2">2 years</SelectItem>
               </SelectContent>
             </Select>
             <FormMessage />

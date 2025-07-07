@@ -80,7 +80,7 @@ amenities: z
   .max(4, { message: "You can select at most 4 amenities" }),
 
   availability: z.enum(["Available", "Not Available"]),
-  duration: z.enum(["Short Term", "Long Term"]),
+  duration: z.number().int().min(1).max(2),
   utility: z.enum(["Yes", "No"]),
   furnished: z.enum(["Yes", "No"]),
   condition: z.enum(["New Building", "Renovated"]),

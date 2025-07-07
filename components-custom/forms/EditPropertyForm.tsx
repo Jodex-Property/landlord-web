@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -124,13 +123,13 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
 
   return (
     <div className="flex flex-col gap-4 p-5 w-full max-w-2xl mx-auto bg-white rounded-lg shadow">
-      {/* Header */}
+      {/* Header 
       <div className="flex justify-between items-center">
         <h1 className="text-lg font-medium">Editing Listed Property</h1>
         <Button variant="ghost" size="sm">
           <X className="h-4 w-4" />
         </Button>
-      </div>
+      </div>*/}
 
       {/* Featured Image */}
       <div className="relative w-full h-48 rounded-lg overflow-hidden">
@@ -210,6 +209,7 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
       {/* Rent Duration */}
       <div className="space-y-2">
         <h3 className="font-medium">Rent Duration</h3>
+
         <Select value={duration} onValueChange={(value) => setDuration(value)}>
           <SelectTrigger className="w-full bg-white">
             <SelectValue placeholder="Select duration" />

@@ -50,7 +50,7 @@ const AddPropertyForm = () => {
       kitchen: "",
       amenities: [],
       availability: "Available",
-      duration: "Short Term",
+      duration: 0,
       utility: "Yes",
       furnished: "No",
       condition: "New Building",
@@ -111,7 +111,7 @@ const AddPropertyForm = () => {
     formData.append("bathrooms", data.bathrooms ?? "");
     formData.append("kitchen", data.kitchen ?? "");
     formData.append("availability", data.availability ?? "");
-    formData.append("duration", data.duration ?? "");
+    formData.append("duration", String(data.duration ?? ""));
     formData.append("utility", data.utility ?? "");
     formData.append("furnished", data.furnished ?? "");
     formData.append("condition", data.condition ?? "");
