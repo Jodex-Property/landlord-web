@@ -53,7 +53,7 @@ const ListingCard = ({ listings }: ListingCardProps) => {
   setIsModalOpen(true);
   const [response] = await getSingleListing();
   if (response) {
-    setSingleListing(response);
+    setSingleListing(response?.data);
   }
 };
 
@@ -65,7 +65,7 @@ const ListingCard = ({ listings }: ListingCardProps) => {
     const fetchListing = async () => {
       const [response] = await getSingleListing();
       if (response) {
-        setSingleListing(response);
+        setSingleListing(response?.data);
       }
     };
     fetchListing();
@@ -139,7 +139,6 @@ interface ListingsCardsProps {
 
 const ListingsCards = ({ listings }: ListingsCardsProps) => {
   if (!Array.isArray(listings)) {
-    console.error("Expected listings to be an array, got:", listings);
     return <p>No listings available.</p>;
   }
   return (

@@ -2,92 +2,17 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { MapPin, X } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import { Property } from "../types";
 import { formatDateLong, formatCurrency } from "@/lib/function";
-
-// Define the type for TenantCard props
-// interface TenantCardProps {
-//   imageSrc: string;
-//   name: string;
-//   age: string;
-//   gender: string;
-//   agentId: string;
-//   onAccept: () => void;
-//   onDecline: () => void;
-// }
-
 interface ListingCardProps {
   singleListing: Property;
 }
 
-// Reusable component for displaying tenant details
-// const TenantCard: React.FC<TenantCardProps> = ({
-//   imageSrc,
-//   name,
-//   age,
-//   gender,
-//   agentId,
-//   onAccept,
-//   onDecline,
-// }) => (
-//   <div className="flex justify-between items-center py-4 border-b">
-//     <div className="flex gap-4 items-center">
-//       <div className="w-16 h-16 rounded-full overflow-hidden relative">
-//         <Image
-//           src={imageSrc}
-//           alt={name}
-//           layout="fill"
-//           objectFit="cover"
-//           className="rounded-full"
-//         />
-//       </div>
-//       <div className="flex-col">
-//         <h2 className="font-medium">{name}</h2>
-//         <p className="text-gray-600 text-sm">
-//           {age}, {gender}
-//         </p>
-//         <p className="text-gray-600 text-sm">Single</p>
-//         <div className="flex gap-3 mt-1">
-//           <Phone className="w-4 h-4 text-blue-950 cursor-pointer" />
-//           <MessageCircle className="w-4 h-4 text-blue-950 cursor-pointer" />
-//         </div>
-//       </div>
-//     </div>
-//     <div className="text-right space-y-2">
-//       <p className="text-sm text-gray-600">Agent ID: {agentId}</p>
-//       <div className="flex gap-2">
-//         <Button
-//           onClick={onAccept}
-//           className="bg-blue-950 text-white hover:bg-blue-900 text-xs px-3 py-1 h-8"
-//         >
-//           Accept
-//         </Button>
-//         <Button
-//           onClick={onDecline}
-//           className="bg-blue-950 text-white hover:bg-blue-900 text-xs px-3 py-1 h-8"
-//         >
-//           Reject
-//         </Button>
-//       </div>
-//     </div>
-//   </div>
-// );
-
 const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
   const [property, setProperty] = useState<Property>(singleListing);
-  // const [isAvailable, setIsAvailable] = useState(
-  //   property?.availability === "available"
-  // );
   const [duration, setDuration] = useState(property?.duration || "Annually");
 
   // Function to handle amenity removal
@@ -98,25 +23,6 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
     }
   };
 
-  // Handle save
-  // const handleSave = () => {
-  //   onSave({
-  //     ...property,
-  //     availability: isAvailable ? "available" : "unavailable",
-  //     duration: duration
-  //   });
-  // };
-
-  // Handle tenant actions
-  // const handleAcceptTenant = (agentId: string) => {
-
-  // };
-
-  // const handleDeclineTenant = (agentId: string) => {
-    
-  // };
-
-  // Get featured image from property pictures or use default
   const featuredImage =
     property?.pictures && property.pictures.length > 0
       ? property.pictures[0]
@@ -157,7 +63,7 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
         </div>
         <div className="flex items-center justify-between">
           <div className="text-xl font-bold text-blue-950">
-            {formatCurrency(property?.rent, 'NGN', 'symbol')}/Year
+            {formatCurrency(property?.rent, "NGN", "symbol")}/Year
           </div>
           <div className="text-xs bg-blue-500 text-white px-2 py-1 rounded">
             154 × 20
@@ -198,36 +104,18 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
           <span>{formatCurrency(property?.legal, "NGN", "symbol")}</span>
         </div>
         <div className="flex justify-between text-sm py-1">
-          <span>Service charge </span>
-          <span>{formatCurrency(property?.caution, "NGN", "symbol")}</span>
-        </div>
-        <div className="flex justify-between text-sm py-1">
           <span>Caution fee</span>
-           <span>{formatCurrency(property?.caution, "NGN", "symbol")}</span>
+          <span>{formatCurrency(property?.caution, "NGN", "symbol")}</span>
         </div>
       </div>
 
       {/* Rent Duration */}
       <div className="space-y-2">
         <h3 className="font-medium">Rent Duration</h3>
-        <Select value={duration} onValueChange={(value) => setDuration(value)}>
-          <SelectTrigger className="w-full bg-white">
-            <SelectValue placeholder="Select duration" />
-          </SelectTrigger>
-          <SelectContent>
-            {[
-              "Monthly",
-              "Quarterly",
-              "Semi-Annually",
-              "Annually",
-              "Bi-Annually",
-            ].map((option) => (
-              <SelectItem key={option} value={option}>
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+
+        <p className="border p-3 rounded-2xl w-fit">
+          {property?.duration} year(s)
+        </p>
       </div>
 
       {/* Boost Post & Availability */}
@@ -271,20 +159,14 @@ const EditPropertyForm = ({ singleListing }: ListingCardProps) => {
       </div> */}
 
       {/* Action Buttons */}
-      <div className="flex justify-between items-center mt-4 pt-4 border-t">
-        <Button
-          // onClick={onDiscard}
-          className="bg-white hover:bg-gray-100 text-blue-950 border border-blue-950"
-        >
+      {/* <div className="flex justify-between items-center mt-4 pt-4 border-t">
+        <Button className="bg-white hover:bg-gray-100 text-blue-950 border border-blue-950">
           Discard
         </Button>
-        <Button
-          // onClick={handleSave}
-          className="bg-blue-950 hover:bg-blue-900 text-white"
-        >
+        <Button className="bg-blue-950 hover:bg-blue-900 text-white">
           Save
         </Button>
-      </div>
+      </div> */}
     </div>
   );
 };
