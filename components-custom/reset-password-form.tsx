@@ -59,6 +59,7 @@ const ResetPassword = () => {
       const [response, status] = await makeRequest(payload);
       
       if (status === 201 || status === 200) {
+        // console.log("✅ Password reset successful:", response);
         showToast(response?.message || "Password reset successful", true, { 
           position: "top-right" 
         });
@@ -66,6 +67,7 @@ const ResetPassword = () => {
         router.push("/");
       } else {
         const error = response?.error || response?.message || "Password reset failed. Please try again.";
+        console.error("❌ Password reset failed:", error);
         showToast(error, false, { position: "top-right" });
       }
   };
