@@ -63,7 +63,7 @@ const SideNavBar = () => {
         `}
       >
         <div className="flex px-6 mt-6 md:mt-5">
-          <Image src="/assets/img/jodex-logo.png" alt="jodex logo" width={100} height={100} />
+          <Image src="/assets/img/Jodex-logo-horizonal.svg" alt="jodex logo" width={150} height={150} />
         </div>
 
         <ul className="px-6 space-y-4 mt-6">

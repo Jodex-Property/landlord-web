@@ -15,22 +15,14 @@ const SignupPage = () => {
 
         <div className="max-w-4xl m-auto w-full flex flex-col items-center">
           <Image
-            src="/assets/img/jodex-logo.png"
+            src="/assets/img/Jodex-logo-horizonal.svg"
             alt="Jodex logo"
-            width={150}
-            height={150}
+            width={250}
+            height={250}
             className="mx-auto mb-10"
           />
           <SignupForm />
-          <p className="text-sm text-gray-500 text-center mt-4">or</p>
-          <div className="flex justify-center items-center w-90 mt-4">
-            <a
-              href="/sign-in"
-              className="text-blue-950 w-full text-center text-[13px] font-bold border border-blue-950 rounded-md px-4 py-2 hover:bg-blue-950 hover:text-white transition duration-300"
-            >
-              Continue with Google
-            </a>
-          </div>
+
 
           <div className="flex justify-center items-center mt-8">
             <p className="text-sm text-gray-500">

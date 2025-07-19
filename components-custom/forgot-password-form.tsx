@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -52,7 +53,7 @@ const ForgetPasswordForm = () => {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email Address</FormLabel>
               <FormControl>
                 <Input placeholder="Enter your email address" {...field} />
               </FormControl>

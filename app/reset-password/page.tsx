@@ -14,10 +14,10 @@ const ResetPasswordPage = () => {
 
         <div className="max-w-4xl m-auto w-full flex flex-col items-center">
            <Image
-            src="/assets/img/jodex-logo.png"
+            src="/assets/img/Jodex-logo-horizonal.svg"
             alt="Jodex logo"
-            width={150}
-            height={150}
+            width={250}
+            height={250}
             className="mx-auto mb-10"
           />
           <ResetPassword />        
