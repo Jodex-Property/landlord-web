@@ -74,7 +74,7 @@ const onSubmit = async (data: LoginFormValues) => {
       router.push("/dashboard");
     }
   } else {
-    const error = response.error || "Login failed. Please try again.";
+    const error = response.message || "Login failed. Please try again.";
     showToast(error, false, { position: "top-right" });
   }
 };

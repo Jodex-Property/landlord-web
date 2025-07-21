@@ -53,7 +53,7 @@ const SignupForm = () => {
 
     const [res, status] = await makeRequest(payload);
 
-    if (status === 200) {
+    if (status === 201 || status === 200 ) {
       // Save the full response in localStorage
       localStorage.setItem("user", JSON.stringify(res));
 
