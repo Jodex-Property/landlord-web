@@ -91,7 +91,7 @@ const StatsSection: React.FC<StatsSectionProps> = ({ chart }) => {
       </div>
 
       {/* Right Card */}
-      <div className="w-full lg:w-[350px] bg-white min-h-32 rounded-2xl shadow-lg flex flex-col items-center justify-center">
+      {/* <div className="w-full lg:w-[350px] bg-white min-h-32 rounded-2xl shadow-lg flex flex-col items-center justify-center">
         <div className="flex items-center justify-between w-full p-4">
           <p className="text-sm">Active Listing Panels</p>
           <SquareArrowRight className="w-4 h-4" />
@@ -191,7 +191,7 @@ const StatsSection: React.FC<StatsSectionProps> = ({ chart }) => {
             <span className="text-xs text-gray-400">Occupied</span>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
