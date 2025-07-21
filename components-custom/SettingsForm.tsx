@@ -118,23 +118,23 @@ const SettingsForm = () => {
 
   const onSubmit = async (data: ProfileFormValues) => {
     const formData = new FormData();
-    formData.append("email", data.email);
-    formData.append("name", data.name);
-    formData.append("contactNumber", data.contactNumber);
-    formData.append("gender", data.gender ?? "");
-    formData.append("dateOfBirth", data.dateOfBirth);
-    formData.append("nin", data.nin);
-    formData.append("maritalStatus", data.maritalStatus ?? "");
-    formData.append("businessName", data.businessName);
-    formData.append("address", data.address);
-    formData.append("option", data.option ?? "");
 
-    if (data.cac) {
-      formData.append("cac", data.cac);
-    }
-    if (data.profilePicture) {
+    if (data.email) formData.append("email", data.email);
+    if (data.name) formData.append("name", data.name);
+    if (data.contactNumber)
+      formData.append("contactNumber", data.contactNumber);
+    if (data.gender) formData.append("gender", data.gender);
+    if (data.dateOfBirth) formData.append("dateOfBirth", data.dateOfBirth);
+    if (data.nin) formData.append("nin", data.nin);
+    if (data.maritalStatus)
+      formData.append("maritalStatus", data.maritalStatus);
+    if (data.businessName) formData.append("businessName", data.businessName);
+    if (data.address) formData.append("address", data.address);
+    if (data.option) formData.append("option", data.option);
+
+    if (data.cac) formData.append("cac", data.cac);
+    if (data.profilePicture)
       formData.append("profilePicture", data.profilePicture);
-    }
 
     const [res, status] = await makeRequest(formData);
 
@@ -143,7 +143,7 @@ const SettingsForm = () => {
 
       setProfile((prev) => ({
         ...prev,
-        ...res, // Assuming the response contains the updated profile data
+        ...res,
       }));
     } else {
       const message =
@@ -383,8 +383,13 @@ const SettingsForm = () => {
               <Button variant="outline" type="button">
                 Discard
               </Button>
-              <Button className="cursor-pointer" type="submit">
-                Save
+
+              <Button
+                type="submit"
+                disabled={loading}
+                className="cursor-pointer"
+              >
+                {loading ? "Saving..." : "Save"}
               </Button>
             </div>
           </form>
