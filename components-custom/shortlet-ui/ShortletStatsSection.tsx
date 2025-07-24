@@ -39,10 +39,10 @@ const ShortletStatsSection = () => {
           <div>
             <h2 className='text-gray-900 text-xl font-bold'>Total Revenue</h2>
             <p className='text-3xl font-extrabold text-gray-900 mt-2'>₦924,000,000</p>
-            <div className="flex items-center gap-2 mt-1">
+            {/* <div className="flex items-center gap-2 mt-1">
               <span className='text-green-500 text-sm font-medium'>↑ 55%</span>
               <span className='text-gray-500 text-sm'>than last month</span>
-            </div>
+            </div> */}
           </div>
           {/* Dots/Menu */}
           <div className="text-gray-400 cursor-pointer text-2xl">

@@ -47,10 +47,7 @@ const StatsSection: React.FC<StatsSectionProps> = ({ chart }) => {
             <p className="text-3xl font-extrabold text-gray-900 mt-2">
               ₦{chart.monthlyRevenue.reduce((sum, item) => sum + item.amount, 0).toLocaleString()}
             </p>
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-green-500 text-sm font-medium">↑ 55%</span>
-              <span className="text-gray-500 text-sm">than last month</span>
-            </div>
+          
           </div>
           <div className="text-gray-400 cursor-pointer text-2xl">⋯</div>
         </div>

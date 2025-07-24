@@ -41,13 +41,13 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
 
   const displayImage =
     pictures && pictures.length > 0
-      ? getValidImageUrl(pictures[0])
+      ? getValidImageUrl(pictures[1])
       : PlaceHolder.src;
 
   return (
     <>
       <div
-        className="bg-white rounded-md flex text-gray-900 shadow-lg cursor-pointer hover:shadow-xl transition-shadow"
+        className="bg-white rounded-md  text-gray-900 shadow-lg cursor-pointer hover:shadow-xl transition-shadow"
         onClick={handleOpenModal}
       >
         <div className="flex flex-col p-2">
@@ -58,11 +58,11 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
             height={500}
             className="rounded-md object-cover h-48 w-full"
           />
-          <div className="flex gap-2 mt-3">
-            {[1, 2, 3].map((_, index) => (
+          <div className="flex gap-2 mt-3 flex-wrap">
+            {pictures?.slice(0, 4).map((url, index) => (
               <Image
                 key={index}
-                src="/assets/img/jodex-img-3.png"
+                src={getValidImageUrl(url)}
                 alt={`Property thumbnail ${index + 1}`}
                 width={40}
                 height={40}
@@ -71,10 +71,25 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
             ))}
           </div>
         </div>
+        <div className="p-3">
+          <div className="flex items-center justify-between mb-2">
+            <div>
+              <p className="text-[15px] font-medium">{title}</p>
+              <p className="text-[14px] font-light text-[#FF5B19]">{price}</p>
+              <div className="flex items-center mt-5 gap-1">
+                <MapPin className="w-4 h-4" />
+                <p className="text-xs text-[#7F7F7F]">{location}</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Trash2Icon className="w-4 h-4 cursor-pointer" />
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded-md shadow-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
@@ -93,7 +108,7 @@ const PropertyCard = ({ rentedProperties }: PropertyCardProps) => {
             <ViewRentedProperty />
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
