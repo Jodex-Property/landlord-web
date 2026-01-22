@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "JODEX Landlord Portal",
+  title: "Welcome to JODEX Landlord Portal",
   description: "Smart Renting Made Simple",
 };
 
